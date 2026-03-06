@@ -35,8 +35,8 @@ const RULES = [
           <h3>📌 Pisz <span class="highlight">Ó</span> w końcówkach <em>-ów, -ówka, -ówna</em></h3>
           <ul class="example-list">
             <li>dom<span class="highlight">ów</span></li>
-            <li>krow<span class="highlight">ówka</span></li>
-            <li>główn<span class="highlight">ówna</span></li>
+            <li>kr<span class="highlight">ó</span>wka</li>
+            <li>kij<span class="highlight">ówka</span></li>
           </ul>
         </div>
         <div class="rule-box">
@@ -51,16 +51,16 @@ const RULES = [
         </div>
       </div>`,
     exercises: [
-      { type:'choice', question:'Wybierz właściwą literę:', sentence:'W lesie mieszka s__wa.', options:['ó','u'], answer:'ó', hint:'sowa → sów – ó wymienne!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Mama wsypała s__l do zupy.', options:['ó','u'], answer:'ó', hint:'sól → sole – ó wymienne na o!' },
       { type:'choice', question:'Wybierz właściwą literę:', sentence:'Mama kupiła k__bek herbaty.', options:['ó','u'], answer:'u', hint:'kubek – brak wymiany, piszemy u!' },
       { type:'choice', question:'Wybierz właściwą literę:', sentence:'Chłopiec biegał kr__tko.', options:['ó','u'], answer:'ó', hint:'krótko → krótszy – ó wymienne!' },
-      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Na niebie świeci piękny ksi__życ.', options:['ę','u'], answer:'ę', hint:'księżyc – ę, nie u!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Mama kupiła mi r__żę z ogrodu.', options:['ó','u'], answer:'ó', hint:'róża → różany – ó wymienne na o!' },
       { type:'choice', question:'Wybierz właściwą literę:', sentence:'Tata wrócił p__źno do domu.', options:['ó','u'], answer:'ó', hint:'późno → opóźnienie – ó wymienne!' },
       { type:'choice', question:'Wybierz właściwą literę:', sentence:'Babcia ugotowała rosół z k__rą.', options:['ó','u'], answer:'u', hint:'kura – brak wymiany, piszemy u!' },
       { type:'choice', question:'Wybierz właściwą literę:', sentence:'Na dworze jest b__rza.', options:['u','ó'], answer:'u', hint:'burza – brak wymiany na o/a, piszemy u!' },
-      { type:'fill', question:'Wpisz ó lub u:', sentence:'Na __licy stoi wysoki d__b.', inputs:[{placeholder:'u/ó',answer:'u'},{placeholder:'ą/o',answer:'ą'}] },
-      { type:'fill', question:'Wpisz ó lub u:', sentence:'M__j tata jeździ na r__werze.', inputs:[{placeholder:'u/ó',answer:'ó'},{placeholder:'u/ó',answer:'o'}] },
-      { type:'fill', question:'Wpisz ó lub u:', sentence:'Mam na im__ Leon i lubię kr__wki mleczne.', inputs:[{placeholder:'u/ó',answer:'ię'},{placeholder:'u/ó',answer:'ó'}] },
+      { type:'fill', question:'Wpisz ó lub u:', sentence:'Na __licy mieszka m__j przyjaciel.', inputs:[{placeholder:'u/ó',answer:'u'},{placeholder:'u/ó',answer:'ó'}] },
+      { type:'fill', question:'Wpisz ó lub u:', sentence:'M__j brat wr__cił późno do domu.', inputs:[{placeholder:'u/ó',answer:'ó'},{placeholder:'u/ó',answer:'ó'}] },
+      { type:'fill', question:'Wpisz ó lub u:', sentence:'C__rka znalazła k__rtkę na podłodze.', inputs:[{placeholder:'u/ó',answer:'ó'},{placeholder:'u/ó',answer:'u'}] },
       {
         type:'sort',
         question:'Przyporządkuj wyrazy – wybierz właściwą pisownię:',
@@ -76,9 +76,9 @@ const RULES = [
       }
     ],
     dictation: {
-      clickText: 'W{ó|u}z jedzie dr{ó|u}gą przez las. Na dr{ó|u}żce siedzi s{o|ó}wa. Mama w{o|ó}ła c{ó|u}rkę do dom{u|ó}. K{u|ó}bek stoi na stole.',
-      speakText: 'Wóz jedzie drogą przez las. Na dróżce siedzi sowa. Mama woła córkę do domu. Kubek stoi na stole.',
-      hint: 'Zwróć uwagę na: wóz, dróżce, sowa, córkę, kubek'
+      clickText: 'W{ó|u}z jedzie d{u|ó}żą drogą przez las. Na dr{ó|u}żce siedzi s{o|ó}wa. Mama w{o|ó}ła c{ó|u}rkę do dom{u|ó}. K{u|ó}bek stoi na stole.',
+      speakText: 'Wóz jedzie dużą drogą przez las. Na dróżce siedzi sowa. Mama woła córkę do domu. Kubek stoi na stole.',
+      hint: 'Zwróć uwagę na: wóz, dużą, dróżce, sowa, woła, córkę, domu, kubek'
     }
   },
 
@@ -127,12 +127,12 @@ const RULES = [
       { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Na drzewie siedzi __ółw.', options:['ż','rz'], answer:'ż', hint:'żółw – ż, brak spółgłoski p/b/t/d przed ż' },
       { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Kup mi lody p__ed domem.', options:['rz','ż'], answer:'rz', hint:'przed – po "p" piszemy rz!' },
       { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'W ogrodzie rośnie piękna b__oza.', options:['rz','ż'], answer:'rz', hint:'brzoza – po "b" piszemy rz!' },
-      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Dzieci jadły gry__ki na śniadanie.', options:['ż','rz'], answer:'ż', hint:'grzyby → grzyb → grzybi – ż (wymiana na g było dawno)' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'W lesie wyrosło wiele g__ybów.', options:['rz','ż'], answer:'rz', hint:'grzyb → grzyby – rz po "g"!' },
       { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Tata wziął no__ ze stołu.', options:['ż','rz'], answer:'ż', hint:'nóż → noże – ż wymienne!' },
       { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Dzieci bawiły się p__y rzece.', options:['rz','ż'], answer:'rz', hint:'przy – po "p" zawsze rz!' },
-      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Na niebie świeciło słońce i było gor__co.', options:['ą','rz'], answer:'ą', hint:'gorąco – tu nie ma wyboru rz/ż, to ą!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Na podwórku rośnie wysoki k__ew.', options:['rz','ż'], answer:'rz', hint:'krzew – po "k" piszemy rz!' },
       { type:'fill', question:'Wpisz rz lub ż:', sentence:'__ółta b__oza rośnie p__y rzece.', inputs:[{placeholder:'ż/rz',answer:'ż'},{placeholder:'ż/rz',answer:'rz'},{placeholder:'ż/rz',answer:'rz'}] },
-      { type:'fill', question:'Wpisz rz lub ż:', sentence:'T__y __aby siedziały na li__cie.', inputs:[{placeholder:'rz/ż',answer:'rz'},{placeholder:'rz/ż',answer:'ż'},{placeholder:'rz/ż',answer:'ż'}] },
+      { type:'fill', question:'Wpisz rz lub ż:', sentence:'T__y __aby siedziały pod k__ewem.', inputs:[{placeholder:'rz/ż',answer:'rz'},{placeholder:'rz/ż',answer:'ż'},{placeholder:'rz/ż',answer:'rz'}] },
       {
         type:'sort',
         question:'Przyporządkuj wyrazy – wybierz właściwą pisownię:',
@@ -356,7 +356,7 @@ const RULES = [
       }
     ],
     dictation: {
-      clickText: '{Nie|Nie }duży pies {nie |nie}lubi kąpieli. Tomek {nie|nie }ma dziś {nie |nie}zbyt dobrego humoru. {Nie|Nie }ładna pogoda {nie |nie}sprzyja spacerowi. To prawdziwe {nie|nie }szczęście!',
+      clickText: '{Nieduży|Nie duży} pies {nie lubi|nielubi} kąpieli. Tomek {nie ma|niema} dziś {niezbyt|nie zbyt} dobrego humoru. {Nieładna|Nie ładna} pogoda {nie sprzyja|niesprzyja} spacerowi. To prawdziwe {nieszczęście|nie szczęście}!',
       speakText: 'Nieduży pies nie lubi kąpieli. Tomek nie ma dziś niezbyt dobrego humoru. Nieładna pogoda nie sprzyja spacerowi. To prawdziwe nieszczęście!',
       hint: 'Zwróć uwagę na: nieduży, nie lubi, nie ma, niezbyt, nieładna, nie sprzyja, nieszczęście'
     }
