@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ortografia z Leosiem</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- EKRAN POWITALNY -->
+<div id="screen-welcome" class="screen active">
+  <div class="stars">
+    <span class="star">&#10022;</span><span class="star">&#10022;</span>
+    <span class="star">&#10022;</span><span class="star">&#10022;</span>
+    <span class="star">&#10022;</span>
+  </div>
+  <div class="welcome-box">
+    <div class="troll-big" id="troll-welcome">
+      <div class="troll-character">
+        <div class="troll-hair"></div>
+        <div class="troll-head">
+          <div class="troll-eyes">
+            <div class="troll-eye"><div class="troll-pupil"></div></div>
+            <div class="troll-eye"><div class="troll-pupil"></div></div>
+          </div>
+          <div class="troll-nose"></div>
+          <div class="troll-mouth"></div>
+          <div class="troll-cheeks">
+            <div class="troll-cheek"></div>
+            <div class="troll-cheek"></div>
+          </div>
+        </div>
+        <div class="troll-body">
+          <div class="troll-arms">
+            <div class="troll-arm left"></div>
+            <div class="troll-arm right"></div>
+          </div>
+          <div class="troll-belly">
+            <span class="troll-star">&#10022;</span>
+          </div>
+        </div>
+        <div class="troll-legs">
+          <div class="troll-leg"></div>
+          <div class="troll-leg"></div>
+        </div>
+      </div>
+    </div>
+    <div class="speech-bubble welcome-bubble">
+      <p>Hej! Jestem <strong>Leoś</strong>!<br>
+      Nauczę cię polskiej ortografii!<br>
+      Gotowy na przygodę? 🌟</p>
+    </div>
+    <h1 class="app-title">Ortografia<br><span>z Leosiem</span></h1>
+    <button class="btn btn-big btn-green" onclick="App.showMenu()">
+      Zaczynamy!
+    </button>
+  </div>
+</div>
+
+<!-- MENU ZASAD -->
+<div id="screen-menu" class="screen">
+  <header class="app-header">
+    <div class="troll-small" onclick="App.showWelcome()">
+      <div class="troll-character small">
+        <div class="troll-hair"></div>
+        <div class="troll-head">
+          <div class="troll-eyes">
+            <div class="troll-eye"><div class="troll-pupil"></div></div>
+            <div class="troll-eye"><div class="troll-pupil"></div></div>
+          </div>
+          <div class="troll-nose"></div>
+          <div class="troll-mouth"></div>
+        </div>
+        <div class="troll-body">
+          <div class="troll-belly"></div>
+        </div>
+      </div>
+    </div>
+    <h2>Wybierz temat!</h2>
+    <div class="score-badge">
+      <span class="score-icon">&#10022;</span>
+      <span id="total-score">0</span> pkt
+    </div>
+  </header>
+
+  <div class="rules-grid" id="rules-grid">
+    <!-- Generowane przez JS -->
+  </div>
+</div>
+
+<!-- EKRAN ZASADY (teoria + ćwiczenia + dyktando) -->
+<div id="screen-rule" class="screen">
+  <header class="app-header">
+    <button class="btn-back" onclick="App.showMenu()">&#8592; Menu</button>
+    <h2 id="rule-title">Zasada</h2>
+    <div class="score-badge">
+      <span class="score-icon">&#10022;</span>
+      <span id="rule-score">0</span> pkt
+    </div>
+  </header>
+
+  <!-- Zakładki -->
+  <div class="tabs">
+    <button class="tab active" data-tab="theory" onclick="App.switchTab('theory')">
+      &#128218; Teoria
+    </button>
+    <button class="tab" data-tab="exercises" onclick="App.switchTab('exercises')">
+      &#9999; Ćwiczenia
+    </button>
+    <button class="tab" data-tab="dictation" onclick="App.switchTab('dictation')">
+      &#127908; Dyktando
+    </button>
+  </div>
+
+  <!-- TEORIA -->
+  <div id="tab-theory" class="tab-content active">
+    <div class="theory-container">
+      <div class="troll-guide">
+        <div class="troll-character medium">
+          <div class="troll-hair"></div>
+          <div class="troll-head">
+            <div class="troll-eyes">
+              <div class="troll-eye"><div class="troll-pupil"></div></div>
+              <div class="troll-eye"><div class="troll-pupil"></div></div>
+            </div>
+            <div class="troll-nose"></div>
+            <div class="troll-mouth"></div>
+            <div class="troll-cheeks">
+              <div class="troll-cheek"></div>
+              <div class="troll-cheek"></div>
+            </div>
+          </div>
+          <div class="troll-body">
+            <div class="troll-belly">
+              <span class="troll-star">&#10022;</span>
+            </div>
+          </div>
+          <div class="troll-legs">
+            <div class="troll-leg"></div>
+            <div class="troll-leg"></div>
+          </div>
+        </div>
+        <div class="speech-bubble theory-bubble" id="theory-intro"></div>
+      </div>
+      <div class="theory-content" id="theory-content"></div>
+      <button class="btn btn-green btn-wide" onclick="App.switchTab('exercises')">
+        Ćwicz teraz! &#9999;
+      </button>
+    </div>
+  </div>
+
+  <!-- ĆWICZENIA -->
+  <div id="tab-exercises" class="tab-content">
+    <div class="exercise-container">
+      <div id="exercise-area"></div>
+      <div id="exercise-feedback" class="feedback hidden"></div>
+      <div class="exercise-nav">
+        <button class="btn btn-outline" id="btn-prev-ex" onclick="App.prevExercise()">&#8592; Poprzednie</button>
+        <span id="exercise-counter">1 / 5</span>
+        <button class="btn btn-green" id="btn-next-ex" onclick="App.nextExercise()">Dalej &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DYKTANDO -->
+  <div id="tab-dictation" class="tab-content">
+    <div class="dictation-container">
+      <div class="troll-guide">
+        <div class="troll-character medium">
+          <div class="troll-hair"></div>
+          <div class="troll-head">
+            <div class="troll-eyes">
+              <div class="troll-eye"><div class="troll-pupil"></div></div>
+              <div class="troll-eye"><div class="troll-pupil"></div></div>
+            </div>
+            <div class="troll-nose"></div>
+            <div class="troll-mouth"></div>
+            <div class="troll-cheeks">
+              <div class="troll-cheek"></div>
+              <div class="troll-cheek"></div>
+            </div>
+          </div>
+          <div class="troll-body">
+            <div class="troll-belly">
+              <span class="troll-star">&#10022;</span>
+            </div>
+          </div>
+          <div class="troll-legs">
+            <div class="troll-leg"></div>
+            <div class="troll-leg"></div>
+          </div>
+        </div>
+        <div class="speech-bubble dictation-bubble" id="dictation-intro"></div>
+      </div>
+      <div id="dictation-area"></div>
+    </div>
+  </div>
+</div>
+
+<!-- WYNIKI -->
+<div id="screen-results" class="screen">
+  <div class="results-container">
+    <div class="troll-character medium bounce">
+      <div class="troll-hair"></div>
+      <div class="troll-head">
+        <div class="troll-eyes">
+          <div class="troll-eye"><div class="troll-pupil"></div></div>
+          <div class="troll-eye"><div class="troll-pupil"></div></div>
+        </div>
+        <div class="troll-nose"></div>
+        <div class="troll-mouth"></div>
+        <div class="troll-cheeks">
+          <div class="troll-cheek"></div>
+          <div class="troll-cheek"></div>
+        </div>
+      </div>
+      <div class="troll-body">
+        <div class="troll-belly">
+          <span class="troll-star">&#10022;</span>
+        </div>
+      </div>
+      <div class="troll-legs">
+        <div class="troll-leg"></div>
+        <div class="troll-leg"></div>
+      </div>
+    </div>
+    <div class="results-box">
+      <h2 id="results-title">Brawo!</h2>
+      <div class="results-stars" id="results-stars"></div>
+      <p id="results-message"></p>
+      <div class="results-score">
+        <span id="results-correct">0</span> / <span id="results-total">0</span>
+        poprawnych odpowiedzi
+      </div>
+      <div class="results-buttons">
+        <button class="btn btn-outline" onclick="App.retryExercises()">Spróbuj ponownie</button>
+        <button class="btn btn-green" onclick="App.showMenu()">Menu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
