@@ -35,8 +35,12 @@ html, body {
 .screen.active { display: block; }
 
 /* ===== WELCOME SCREEN ===== */
-#screen-welcome {
+#screen-welcome.active {
   display: flex; flex-direction: column; align-items: center;
+  justify-content: center;
+}
+#screen-welcome {
+  flex-direction: column; align-items: center;
   justify-content: center; min-height: 100vh;
   background: linear-gradient(160deg, #1b5e20 0%, #388e3c 40%, #81c784 100%);
   position: relative; overflow: hidden;
@@ -65,7 +69,7 @@ html, body {
 }
 .app-title span { color: var(--yellow); font-size: 3.2rem; }
 
-/* ===== TROLL CHARACTER ===== */
+/* ===== LEOŚ – FLUFFY BALL ===== */
 .troll-character {
   position: relative; display: flex; flex-direction: column; align-items: center;
   animation: troll-bounce 2s ease-in-out infinite;
@@ -82,153 +86,164 @@ html, body {
 }
 
 /* sizes */
-.troll-big .troll-character       { --sz: 1.6; }
-.troll-character.medium            { --sz: 1.2; }
-.troll-character.small             { --sz: 0.55; }
-.troll-character                   { --sz: 1; }
+.troll-big .troll-character  { --sz: 1.6; }
+.troll-character.medium       { --sz: 1.2; }
+.troll-character.small        { --sz: 0.55; }
+.troll-character               { --sz: 1; }
 
-/* Hair */
-.troll-hair {
-  width: calc(70px * var(--sz, 1));
-  height: calc(60px * var(--sz, 1));
-  background: var(--troll-hair);
-  border-radius: 50% 50% 0 0;
-  position: relative; z-index: 2;
-  box-shadow: inset -4px -4px 0 rgba(0,0,0,.15);
-}
-.troll-hair::before {
-  content: '';
-  position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
-  width: 40%; height: 80%;
-  background: var(--troll-hair);
-  border-radius: 50% 50% 0 0;
-  box-shadow: -22px 0 0 var(--troll-hair), 22px 0 0 var(--troll-hair);
-}
+/* Hide old parts */
+.troll-hair   { display: none; }
+.troll-body   { display: none; }
+.troll-nose   { display: none; }
+.troll-cheeks { display: none; }
 
-/* Head */
+/* ── THE FLUFFY BALL ── */
 .troll-head {
-  width: calc(80px * var(--sz, 1));
-  height: calc(75px * var(--sz, 1));
-  background: var(--troll-body);
+  width: calc(120px * var(--sz, 1));
+  height: calc(120px * var(--sz, 1));
+  background:
+    radial-gradient(circle at 38% 32%,
+      #c8e86a 0%,
+      #80c840 25%,
+      #4caf50 52%,
+      #2d7a1f 80%,
+      #1a5214 100%);
   border-radius: 50%;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   position: relative; z-index: 1;
-  box-shadow: inset -6px -6px 0 rgba(0,0,0,.1), var(--shadow);
-  margin-top: calc(-10px * var(--sz, 1));
+  box-shadow:
+    inset -10px -14px 28px rgba(0,0,0,.30),
+    inset  5px   5px 14px rgba(255,255,255,.13),
+    0 6px 20px rgba(0,0,0,.25);
   gap: calc(4px * var(--sz, 1));
+  overflow: visible;
 }
 
+/* Soft fuzzy glow layer */
+.troll-head::before {
+  content: '';
+  position: absolute;
+  width: 130%; height: 130%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 38% 32%,
+    transparent 42%,
+    rgba(105,185,50,.75) 52%,
+    rgba(55,140,20,.50) 66%,
+    transparent 80%);
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(calc(5px * var(--sz,1)));
+}
+
+/* Fur spike ring */
+.troll-head::after {
+  content: '';
+  position: absolute;
+  width: 148%; height: 148%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    #5db830 0deg,   transparent 5deg,
+    #5db830 10deg,  transparent 15deg,
+    #5db830 20deg,  transparent 25deg,
+    #5db830 30deg,  transparent 35deg,
+    #5db830 40deg,  transparent 45deg,
+    #5db830 50deg,  transparent 55deg,
+    #5db830 60deg,  transparent 65deg,
+    #5db830 70deg,  transparent 75deg,
+    #5db830 80deg,  transparent 85deg,
+    #5db830 90deg,  transparent 95deg,
+    #5db830 100deg, transparent 105deg,
+    #5db830 110deg, transparent 115deg,
+    #5db830 120deg, transparent 125deg,
+    #5db830 130deg, transparent 135deg,
+    #5db830 140deg, transparent 145deg,
+    #5db830 150deg, transparent 155deg,
+    #5db830 160deg, transparent 165deg,
+    #5db830 170deg, transparent 175deg,
+    #5db830 180deg, transparent 185deg,
+    #5db830 190deg, transparent 195deg,
+    #5db830 200deg, transparent 205deg,
+    #5db830 210deg, transparent 215deg,
+    #5db830 220deg, transparent 225deg,
+    #5db830 230deg, transparent 235deg,
+    #5db830 240deg, transparent 245deg,
+    #5db830 250deg, transparent 255deg,
+    #5db830 260deg, transparent 265deg,
+    #5db830 270deg, transparent 275deg,
+    #5db830 280deg, transparent 285deg,
+    #5db830 290deg, transparent 295deg,
+    #5db830 300deg, transparent 305deg,
+    #5db830 310deg, transparent 315deg,
+    #5db830 320deg, transparent 325deg,
+    #5db830 330deg, transparent 335deg,
+    #5db830 340deg, transparent 345deg,
+    #5db830 350deg, transparent 355deg,
+    #5db830 360deg
+  );
+  border-radius: 50%;
+  -webkit-mask: radial-gradient(circle at center, transparent 45%, black 47%, black 68%, transparent 70%);
+  mask:          radial-gradient(circle at center, transparent 45%, black 47%, black 68%, transparent 70%);
+  z-index: -1;
+  filter: blur(calc(1.5px * var(--sz,1)));
+}
+
+/* ── BIG EYES ── */
 .troll-eyes {
-  display: flex; gap: calc(14px * var(--sz, 1));
+  display: flex; gap: calc(8px * var(--sz, 1));
   margin-top: calc(6px * var(--sz, 1));
 }
 .troll-eye {
-  width: calc(16px * var(--sz, 1));
-  height: calc(18px * var(--sz, 1));
-  background: var(--white);
+  width: calc(34px * var(--sz, 1));
+  height: calc(38px * var(--sz, 1));
+  background: radial-gradient(circle at 42% 38%, #ffffff, #eeeeee 60%, #e0e0e0);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+  box-shadow: 0 3px 8px rgba(0,0,0,.35), inset 0 -2px 5px rgba(0,0,0,.1);
 }
 .troll-pupil {
-  width: calc(9px * var(--sz, 1));
-  height: calc(10px * var(--sz, 1));
-  background: #1a1a1a;
+  width: calc(17px * var(--sz, 1));
+  height: calc(19px * var(--sz, 1));
+  background: radial-gradient(circle at 40% 35%, #2a2a2a, #111);
   border-radius: 50%;
   position: relative;
+  box-shadow:
+    0 0 0 calc(3.5px * var(--sz,1)) #4caf50,
+    0 0 0 calc(4.5px * var(--sz,1)) #2e7d32;
 }
 .troll-pupil::after {
   content: '';
-  position: absolute; top: 15%; right: 15%;
-  width: 30%; height: 30%;
-  background: var(--white);
+  position: absolute; top: 10%; right: 10%;
+  width: 35%; height: 35%;
+  background: rgba(255,255,255,.9);
   border-radius: 50%;
 }
 
-.troll-nose {
-  width: calc(14px * var(--sz, 1));
-  height: calc(10px * var(--sz, 1));
-  background: var(--troll-dark);
-  border-radius: 50%;
-  opacity: .5;
-}
-
+/* ── SMALL SMILE ── */
 .troll-mouth {
-  width: calc(30px * var(--sz, 1));
-  height: calc(14px * var(--sz, 1));
-  border: calc(3px * var(--sz, 1)) solid var(--troll-dark);
+  width: calc(28px * var(--sz, 1));
+  height: calc(12px * var(--sz, 1));
+  border: calc(2.5px * var(--sz, 1)) solid rgba(0,60,0,.55);
   border-top: none;
-  border-radius: 0 0 calc(15px * var(--sz, 1)) calc(15px * var(--sz, 1));
-  background: var(--pink);
-  margin-bottom: calc(6px * var(--sz, 1));
+  border-radius: 0 0 calc(14px * var(--sz, 1)) calc(14px * var(--sz, 1));
+  background: transparent;
+  margin-bottom: calc(8px * var(--sz, 1));
 }
-.troll-mouth::before {
-  content: '';
-  display: block;
-  width: 40%;
-  height: 60%;
-  background: rgba(255,255,255,.5);
-  border-radius: 50%;
-  margin: 2px auto 0;
-}
+.troll-mouth::before { display: none; }
 
-.troll-cheeks {
-  position: absolute;
-  bottom: calc(12px * var(--sz, 1));
-  left: 0; right: 0;
-  display: flex; justify-content: space-between;
-  padding: 0 calc(6px * var(--sz, 1));
-}
-.troll-cheek {
-  width: calc(14px * var(--sz, 1));
-  height: calc(9px * var(--sz, 1));
-  background: rgba(255,100,100,.35);
-  border-radius: 50%;
-}
-
-/* Body */
-.troll-body {
-  width: calc(70px * var(--sz, 1));
-  height: calc(65px * var(--sz, 1));
-  background: var(--troll-body);
-  border-radius: calc(20px * var(--sz, 1)) calc(20px * var(--sz, 1)) calc(12px * var(--sz, 1)) calc(12px * var(--sz, 1));
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: inset -5px -5px 0 rgba(0,0,0,.1);
-  position: relative;
-  margin-top: calc(-5px * var(--sz, 1));
-}
-.troll-arms { position: absolute; top: 10%; left: 0; right: 0; display: flex; justify-content: space-between; }
-.troll-arm {
-  width: calc(14px * var(--sz, 1));
-  height: calc(40px * var(--sz, 1));
-  background: var(--troll-body);
-  border-radius: calc(8px * var(--sz, 1));
-  box-shadow: inset -3px -3px 0 rgba(0,0,0,.1);
-}
-.troll-arm.left  { transform: rotate(30deg); transform-origin: top center; }
-.troll-arm.right { transform: rotate(-30deg); transform-origin: top center; }
-
-.troll-belly {
-  width: calc(42px * var(--sz, 1));
-  height: calc(42px * var(--sz, 1));
-  background: var(--green-light);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: inset 2px 2px 5px rgba(0,0,0,.1);
-}
-.troll-star { color: var(--yellow); font-size: calc(18px * var(--sz, 1)); }
-
-/* Legs */
+/* ── SMALL GREEN FEET ── */
 .troll-legs {
-  display: flex; gap: calc(8px * var(--sz, 1));
+  display: flex; gap: calc(12px * var(--sz, 1));
   margin-top: calc(-2px * var(--sz, 1));
+  position: relative; z-index: 2;
 }
 .troll-leg {
-  width: calc(20px * var(--sz, 1));
-  height: calc(30px * var(--sz, 1));
-  background: var(--troll-dark);
-  border-radius: calc(8px * var(--sz, 1)) calc(8px * var(--sz, 1)) calc(12px * var(--sz, 1)) calc(12px * var(--sz, 1));
-  box-shadow: inset -3px -3px 0 rgba(0,0,0,.2);
+  width: calc(26px * var(--sz, 1));
+  height: calc(18px * var(--sz, 1));
+  background: radial-gradient(circle at 40% 30%, #5db830, #2d6a1f);
+  border-radius: calc(6px * var(--sz, 1)) calc(6px * var(--sz, 1)) calc(14px * var(--sz, 1)) calc(14px * var(--sz, 1));
+  box-shadow: inset -2px -3px 5px rgba(0,0,0,.3);
 }
 
 /* ===== SPEECH BUBBLE ===== */
@@ -574,8 +589,11 @@ html, body {
 .dictation-actions { display: flex; gap: .7rem; margin-top: .8rem; flex-wrap: wrap; }
 
 /* ===== RESULTS SCREEN ===== */
+#screen-results.active {
+  display: flex; align-items: center; justify-content: center;
+}
 #screen-results {
-  display: flex; align-items: center; justify-content: center; min-height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(135deg, #1b5e20, #388e3c, #81c784);
 }
 .results-container {
