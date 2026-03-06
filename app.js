@@ -1,34 +1,42 @@
 // ============================================================
-//  ORTOGRAFIA Z LEOSIEM – główna logika aplikacji
+//  ORTOGRAFIA Z LEOSIEM
 // ============================================================
 
+// ── HELPER: Leoś mówi ──────────────────────────────────────
+function leosTalk(ms = 2400) {
+  document.querySelectorAll('.troll-character').forEach(el => {
+    el.classList.add('is-talking');
+    clearTimeout(el._talkTimer);
+    el._talkTimer = setTimeout(() => el.classList.remove('is-talking'), ms);
+  });
+}
+
+// ── RULES DATA ─────────────────────────────────────────────
 const RULES = [
-  // ─────────────────────────────────────────────────────────
+  // ─── Ó / U ───────────────────────────────────────────────
   {
     id: 'ou',
     letters: 'Ó / U',
     icon: '🟡',
     title: 'Kiedy pisać Ó, a kiedy U?',
-    theoryIntro: 'Hej! Ó i U brzmią tak samo, ale piszemy je inaczej. Znam kilka sztuczek, żeby nie popełniać błędów! 📝',
+    theoryIntro: 'Hej! Ó i U brzmią tak samo, ale piszemy je inaczej. Znam kilka sztuczek! 📝',
     theory: `
       <div class="theory-section">
         <div class="rule-box">
-          <h3>📌 Pisz <span class="highlight">Ó</span>, gdy w innej formie wyrazu zmienia się na O, A lub E</h3>
-          <p>Zmiana pomaga nam odkryć, które <em>ó</em> się kryje w słowie!</p>
+          <h3>📌 Pisz <span class="highlight">Ó</span>, gdy w innej formie wyrazu zmienia się na O lub A</h3>
           <ul class="example-list">
-            <li>wój – w<span class="highlight">ó</span>z → w<span class="highlight">o</span>zy</li>
+            <li>w<span class="highlight">ó</span>z → w<span class="highlight">o</span>zy</li>
             <li>sk<span class="highlight">ó</span>ra → sk<span class="highlight">o</span>rka</li>
             <li>mi<span class="highlight">ó</span>d → mi<span class="highlight">o</span>du</li>
             <li>r<span class="highlight">ó</span>g → r<span class="highlight">o</span>gata</li>
           </ul>
         </div>
         <div class="rule-box">
-          <h3>📌 Pisz <span class="highlight">Ó</span> w zakończeniach <em>-ów, -ówka, -ówna</em></h3>
+          <h3>📌 Pisz <span class="highlight">Ó</span> w końcówkach <em>-ów, -ówka, -ówna</em></h3>
           <ul class="example-list">
             <li>dom<span class="highlight">ów</span></li>
             <li>krow<span class="highlight">ówka</span></li>
             <li>główn<span class="highlight">ówna</span></li>
-            <li>nazw<span class="highlight">ówka</span></li>
           </ul>
         </div>
         <div class="rule-box">
@@ -38,77 +46,49 @@ const RULES = [
           </ul>
         </div>
         <div class="theory-tip">
-          <strong>🧠 Sztuczka Leosia:</strong> Zmień wyraz do innej formy. Jeśli <em>ó</em> zamienia się na <em>o</em> lub <em>a</em> – pisz <strong>ó</strong>!<br>
-          Np. <em>b<strong>ó</strong>l → b<strong>o</strong>leć</em> – znaczy pisz ó.
+          <strong>🧠 Sztuczka Leosia:</strong> Zmień wyraz. Jeśli <em>ó</em> zamienia się na <em>o</em> lub <em>a</em> – pisz <strong>ó</strong>!<br>
+          Np. <em>b<strong>ó</strong>l → b<strong>o</strong>leć</em>
         </div>
-      </div>
-    `,
+      </div>`,
     exercises: [
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'W lesie mieszka s__wa.', options:['ó','u'], answer:'ó', hint:'sowa → sów – ó wymienne!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Mama kupiła k__bek herbaty.', options:['ó','u'], answer:'u', hint:'kubek – brak wymiany, piszemy u!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Chłopiec biegał kr__tko.', options:['ó','u'], answer:'ó', hint:'krótko → krótszy – ó wymienne!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Na niebie świeci piękny ksi__życ.', options:['ę','u'], answer:'ę', hint:'księżyc – ę, nie u!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Tata wrócił p__źno do domu.', options:['ó','u'], answer:'ó', hint:'późno → opóźnienie – ó wymienne!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Babcia ugotowała rosół z k__rą.', options:['ó','u'], answer:'u', hint:'kura – brak wymiany, piszemy u!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Na dworze jest b__rza.', options:['u','ó'], answer:'u', hint:'burza – brak wymiany na o/a, piszemy u!' },
+      { type:'fill', question:'Wpisz ó lub u:', sentence:'Na __licy stoi wysoki d__b.', inputs:[{placeholder:'u/ó',answer:'u'},{placeholder:'ą/o',answer:'ą'}] },
+      { type:'fill', question:'Wpisz ó lub u:', sentence:'M__j tata jeździ na r__werze.', inputs:[{placeholder:'u/ó',answer:'ó'},{placeholder:'u/ó',answer:'o'}] },
+      { type:'fill', question:'Wpisz ó lub u:', sentence:'Mam na im__ Leon i lubię kr__wki mleczne.', inputs:[{placeholder:'u/ó',answer:'ię'},{placeholder:'u/ó',answer:'ó'}] },
       {
-        type: 'choice',
-        question: 'Wybierz właściwą literę:',
-        sentence: 'W lesie mieszka s__wa.',
-        blank: 'o',
-        options: ['ó', 'u'],
-        answer: 'ó',
-        hint: 'sowa → sów (dopełniacz l. mn.) – ó wymienne!'
-      },
-      {
-        type: 'choice',
-        question: 'Wybierz właściwą literę:',
-        sentence: 'Mama kupiła k__bek herbaty.',
-        blank: 'u',
-        options: ['ó', 'u'],
-        answer: 'u',
-        hint: 'kubek – nie ma wymiany ó→o, więc piszemy u!'
-      },
-      {
-        type: 'choice',
-        question: 'Wybierz właściwą literę:',
-        sentence: 'Chłopiec biegał w kr__tko.',
-        blank: 'ó',
-        options: ['ó', 'u'],
-        answer: 'ó',
-        hint: 'krótko → krótszy – ó wymienne na o!'
-      },
-      {
-        type: 'fill',
-        question: 'Wpisz ó lub u:',
-        sentence: 'Na __licy stoi wysoki d__b.',
-        blanks: ['u', 'ą'],
-        inputs: [
-          { placeholder: 'u/ó', answer: 'u' },
-          { placeholder: 'ą/o', answer: 'ą' }
-        ]
-      },
-      {
-        type: 'sort',
-        question: 'Przyporządkuj wyrazy do odpowiedniej kolumny:',
-        columns: ['Ó', 'U'],
-        words: [
-          { word: 'wóz', col: 'Ó' },
-          { word: 'ulica', col: 'U' },
-          { word: 'córka', col: 'Ó' },
-          { word: 'ucho', col: 'U' },
-          { word: 'dróżka', col: 'Ó' },
-          { word: 'kubek', col: 'U' }
+        type:'sort',
+        question:'Przyporządkuj wyrazy – wybierz właściwą pisownię:',
+        columns:['Ó','U'],
+        words:[
+          { stem:'w_z',    answer:'ó', col:'Ó', display:'wóz' },
+          { stem:'_lica',  answer:'u', col:'U', display:'ulica' },
+          { stem:'c_rka',  answer:'ó', col:'Ó', display:'córka' },
+          { stem:'_cho',   answer:'u', col:'U', display:'ucho' },
+          { stem:'dr_żka', answer:'ó', col:'Ó', display:'dróżka' },
+          { stem:'k_bek',  answer:'u', col:'U', display:'kubek' },
         ]
       }
     ],
     dictation: {
-      intro: 'Teraz napiszemy krótkie dyktando! Uważaj na ó i u. Przeczytaj tekst, a potem wpisz z pamięci! 🎤',
-      text: 'Wóz jedzie drogą przez las. Na dróżce siedzi sowa. Mama woła córkę do domu. Kubek stoi na stole.',
+      clickText: 'W{ó|u}z jedzie dr{ó|u}gą przez las. Na dr{ó|u}żce siedzi s{o|ó}wa. Mama w{o|ó}ła c{ó|u}rkę do dom{u|ó}. K{u|ó}bek stoi na stole.',
+      speakText: 'Wóz jedzie drogą przez las. Na dróżce siedzi sowa. Mama woła córkę do domu. Kubek stoi na stole.',
       hint: 'Zwróć uwagę na: wóz, dróżce, sowa, córkę, kubek'
     }
   },
 
-  // ─────────────────────────────────────────────────────────
+  // ─── RZ / Ż ──────────────────────────────────────────────
   {
     id: 'rzz',
     letters: 'RZ / Ż',
     icon: '🔴',
     title: 'Kiedy pisać RZ, a kiedy Ż?',
-    theoryIntro: 'Te dwa dźwięki brzmią tak samo! Ale ja znam zasady, które ci pomogą! 🕵️',
+    theoryIntro: 'Te dwa dźwięki brzmią tak samo! Ale ja znam zasady! 🕵️',
     theory: `
       <div class="theory-section">
         <div class="rule-box">
@@ -126,98 +106,67 @@ const RULES = [
           <h3>📌 Pisz <span class="highlight">RZ</span>, gdy wymienia się na <em>r</em></h3>
           <ul class="example-list">
             <li>mo<span class="highlight">rz</span>e → mo<span class="highlight">r</span>ski</li>
-            <li>wia<span class="highlight">rz</span> → wia<span class="highlight">r</span>a</li>
             <li>gó<span class="highlight">rz</span>e → gó<span class="highlight">r</span>a</li>
           </ul>
         </div>
         <div class="rule-box">
-          <h3>📌 Pisz <span class="highlight">Ż</span>, gdy wymienia się na <em>g, dz, z, ź, s, dź</em></h3>
+          <h3>📌 Pisz <span class="highlight">Ż</span>, gdy wymienia się na <em>g, dz, z, ź, s</em></h3>
           <ul class="example-list">
             <li>ksi<span class="highlight">ąż</span>ka → ksi<span class="highlight">ąg</span>i</li>
             <li>dro<span class="highlight">ż</span>szy → dro<span class="highlight">g</span>i</li>
-            <li>wą<span class="highlight">ż</span> → wę<span class="highlight">ż</span>e</li>
+            <li>nó<span class="highlight">ż</span> → no<span class="highlight">ż</span>e</li>
           </ul>
         </div>
         <div class="theory-tip">
-          <strong>🧠 Sztuczka Leosia:</strong> Po literach p, b, t, d, k, g, ch – prawie zawsze piszemy <strong>rz</strong>!<br>
+          <strong>🧠 Sztuczka Leosia:</strong> Po literach p, b, t, d, k, g, ch – prawie zawsze <strong>rz</strong>!<br>
           Np. <em><strong>prz</strong>ed, <strong>brz</strong>oza, <strong>trz</strong>y, <strong>drz</strong>wi</em>
         </div>
-      </div>
-    `,
+      </div>`,
     exercises: [
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Mama u__ądziła przyjęcie.', options:['rz','ż'], answer:'rz', hint:'urządziła – rządzić → rząd, piszemy rz!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Na drzewie siedzi __ółw.', options:['ż','rz'], answer:'ż', hint:'żółw – ż, brak spółgłoski p/b/t/d przed ż' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Kup mi lody p__ed domem.', options:['rz','ż'], answer:'rz', hint:'przed – po "p" piszemy rz!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'W ogrodzie rośnie piękna b__oza.', options:['rz','ż'], answer:'rz', hint:'brzoza – po "b" piszemy rz!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Dzieci jadły gry__ki na śniadanie.', options:['ż','rz'], answer:'ż', hint:'grzyby → grzyb → grzybi – ż (wymiana na g było dawno)' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Tata wziął no__ ze stołu.', options:['ż','rz'], answer:'ż', hint:'nóż → noże – ż wymienne!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Dzieci bawiły się p__y rzece.', options:['rz','ż'], answer:'rz', hint:'przy – po "p" zawsze rz!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Na niebie świeciło słońce i było gor__co.', options:['ą','rz'], answer:'ą', hint:'gorąco – tu nie ma wyboru rz/ż, to ą!' },
+      { type:'fill', question:'Wpisz rz lub ż:', sentence:'__ółta b__oza rośnie p__y rzece.', inputs:[{placeholder:'ż/rz',answer:'ż'},{placeholder:'ż/rz',answer:'rz'},{placeholder:'ż/rz',answer:'rz'}] },
+      { type:'fill', question:'Wpisz rz lub ż:', sentence:'T__y __aby siedziały na li__cie.', inputs:[{placeholder:'rz/ż',answer:'rz'},{placeholder:'rz/ż',answer:'ż'},{placeholder:'rz/ż',answer:'ż'}] },
       {
-        type: 'choice',
-        question: 'Wybierz właściwą pisownię:',
-        sentence: 'Mama u__ądziła przyjęcie.',
-        blank: 'rz/ż',
-        options: ['rz', 'ż'],
-        answer: 'rz',
-        hint: 'urządziła – nie ma wymiany na r, ale po "u" używamy rz (rządzić → rząd)'
-      },
-      {
-        type: 'choice',
-        question: 'Wybierz właściwą pisownię:',
-        sentence: 'Na drzewie siedzi __ółw.',
-        blank: 'rz/ż',
-        options: ['ż', 'rz'],
-        answer: 'ż',
-        hint: 'żółw – ż, bo brak wymiany na r; nie ma tu spółgłoski p/b/t/d przed nim'
-      },
-      {
-        type: 'choice',
-        question: 'Wybierz właściwą pisownię:',
-        sentence: 'Kup mi p__ed domem lody.',
-        blank: 'rz',
-        options: ['rz', 'ż'],
-        answer: 'rz',
-        hint: 'przed – po "p" piszemy rz!'
-      },
-      {
-        type: 'fill',
-        question: 'Wpisz rz lub ż:',
-        sentence: '__ółta brzo__a rośnie p__y rzece.',
-        blanks: ['ż', 'z', 'rz'],
-        inputs: [
-          { placeholder: 'rz/ż', answer: 'ż' },
-          { placeholder: 'rz/ż', answer: 'z' },
-          { placeholder: 'rz/ż', answer: 'rz' }
-        ]
-      },
-      {
-        type: 'sort',
-        question: 'Przyporządkuj wyrazy:',
-        columns: ['RZ', 'Ż'],
-        words: [
-          { word: 'drzewo', col: 'RZ' },
-          { word: 'żaba', col: 'Ż' },
-          { word: 'brzeg', col: 'RZ' },
-          { word: 'żółty', col: 'Ż' },
-          { word: 'trzy', col: 'RZ' },
-          { word: 'nóż', col: 'Ż' }
+        type:'sort',
+        question:'Przyporządkuj wyrazy – wybierz właściwą pisownię:',
+        columns:['RZ','Ż'],
+        words:[
+          { stem:'d_zewo', answer:'rz', col:'RZ', display:'drzewo' },
+          { stem:'_aba',   answer:'ż',  col:'Ż',  display:'żaba' },
+          { stem:'b_eg',   answer:'rz', col:'RZ', display:'brzeg' },
+          { stem:'_ółty',  answer:'ż',  col:'Ż',  display:'żółty' },
+          { stem:'t_y',    answer:'rz', col:'RZ', display:'trzy' },
+          { stem:'nó_',    answer:'ż',  col:'Ż',  display:'nóż' },
         ]
       }
     ],
     dictation: {
-      intro: 'Dyktando z rz i ż! Przeczytaj, zapamiętaj, a potem pisz! 🎤',
-      text: 'Trzy żaby siedziały przy brzegu rzeki. Drzewo rzucało cień na trawę. Grzyb wyrósł pod krzewem.',
+      clickText: 'T{rz|ż}y {ż|rz}aby siedziały p{rz|ż}y b{rz|ż}egu {rz|ż}eki. D{rz|ż}ewo {rz|ż}ucało cień na trawę. G{rz|ż}yb wyrósł pod k{rz|ż}ewem.',
+      speakText: 'Trzy żaby siedziały przy brzegu rzeki. Drzewo rzucało cień na trawę. Grzyb wyrósł pod krzewem.',
       hint: 'Zwróć uwagę na: trzy, żaby, przy, brzegu, rzeki, drzewo, grzyb, krzewem'
     }
   },
 
-  // ─────────────────────────────────────────────────────────
+  // ─── CH / H ──────────────────────────────────────────────
   {
     id: 'chh',
     letters: 'CH / H',
     icon: '🔵',
     title: 'Kiedy pisać CH, a kiedy H?',
-    theoryIntro: 'CH i H to kolejna zagadka! Spokojnie, mam dla ciebie proste zasady! 💡',
+    theoryIntro: 'CH i H to kolejna zagadka! Spokojnie, mam proste zasady! 💡',
     theory: `
       <div class="theory-section">
         <div class="rule-box">
           <h3>📌 Pisz <span class="highlight">CH</span>, gdy wymienia się na <em>sz</em></h3>
           <ul class="example-list">
             <li>su<span class="highlight">ch</span>y → su<span class="highlight">sz</span>yć</li>
-            <li>sło<span class="highlight">ch</span>ać → </li>
             <li>mu<span class="highlight">ch</span>a → mu<span class="highlight">sz</span>ka</li>
           </ul>
         </div>
@@ -225,408 +174,263 @@ const RULES = [
           <h3>📌 Pisz <span class="highlight">CH</span> na końcu wyrazu</h3>
           <ul class="example-list">
             <li>ma<span class="highlight">ch</span></li>
-            <li>gmac<span class="highlight">h</span></li>
+            <li>gma<span class="highlight">ch</span></li>
             <li>śpie<span class="highlight">ch</span></li>
-            <li>pasterz w stada<span class="highlight">ch</span></li>
+            <li>w stada<span class="highlight">ch</span></li>
           </ul>
         </div>
         <div class="rule-box">
-          <h3>📌 Pisz <span class="highlight">H</span>, gdy wymienia się na <em>g, z, ź</em> lub w wyrazach obcego pochodzenia</h3>
+          <h3>📌 Pisz <span class="highlight">H</span> w wyrazach obcego pochodzenia i gdy wymienia się na <em>g, z</em></h3>
           <ul class="example-list">
             <li><span class="highlight">h</span>erbata</li>
-            <li>dro<span class="highlight">h</span>i → dro<span class="highlight">g</span>a (białoruska forma)</li>
+            <li><span class="highlight">h</span>istoria</li>
+            <li><span class="highlight">h</span>umor</li>
             <li>wa<span class="highlight">h</span>ać → wa<span class="highlight">g</span>a</li>
           </ul>
         </div>
         <div class="theory-tip">
-          <strong>🧠 Sztuczka Leosia:</strong> Sprawdź, czy wyraz pochodzi z języka obcego (herbata, historia, humor) – wtedy raczej <strong>h</strong>. W polskich słowach częściej <strong>ch</strong>!
+          <strong>🧠 Sztuczka Leosia:</strong> Wyraz z obcego języka (herbata, humor, historia)? → <strong>h</strong>.<br>
+          Polskie słowo z zamianą na sz? → <strong>ch</strong>!
         </div>
-      </div>
-    `,
+      </div>`,
     exercises: [
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Mama wypiła filiżankę __erbaty.', options:['h','ch'], answer:'h', hint:'herbata – wyraz obcy, piszemy h!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Tata smażył su__ary na patelni.', options:['ch','h'], answer:'ch', hint:'suchar → suchy → susz – wymiana ch→sz!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Lubię __umor i śmiech.', options:['h','ch'], answer:'h', hint:'humor – łacińskie słowo, piszemy h!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Na łące bzykała mu__a.', options:['ch','h'], answer:'ch', hint:'mucha → muszka – wymiana ch→sz!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Na lekcji omawiamy __istorię Polski.', options:['h','ch'], answer:'h', hint:'historia – wyraz obcy, piszemy h!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'Kasia weszła do sali z wielkim __ałasem.', options:['h','ch'], answer:'h', hint:'hałas – piszemy h!' },
+      { type:'choice', question:'Wybierz właściwą pisownię:', sentence:'__łopiec zjadł __leb z masłem.', options:['Ch i chl','H i hl'], answer:'Ch i chl', hint:'chłopiec i chleb – polskie słowa z ch!' },
+      { type:'fill', question:'Wpisz ch lub h:', sentence:'__łopiec śpie__ał w do__u.', inputs:[{placeholder:'ch/h',answer:'ch'},{placeholder:'ch/h',answer:'ch'},{placeholder:'ch/h',answer:'ch'}] },
+      { type:'fill', question:'Wpisz ch lub h:', sentence:'Piję __erbatę i słucham muzyki w ci__u.', inputs:[{placeholder:'ch/h',answer:'h'},{placeholder:'ch/h',answer:'ch'}] },
       {
-        type: 'choice',
-        question: 'Wybierz właściwą pisownię:',
-        sentence: 'Mama wypiła filiżankę __erbaty.',
-        blank: 'ch/h',
-        options: ['h', 'ch'],
-        answer: 'h',
-        hint: 'herbata – wyraz obcego pochodzenia, piszemy h!'
-      },
-      {
-        type: 'choice',
-        question: 'Wybierz właściwą pisownię:',
-        sentence: 'Tata smażył su__ary na patelni.',
-        blank: 'ch',
-        options: ['ch', 'h'],
-        answer: 'ch',
-        hint: 'suchar – suchy → susz (wymiana ch→sz), piszemy ch!'
-      },
-      {
-        type: 'choice',
-        question: 'Wybierz właściwą pisownię:',
-        sentence: 'Lubię __umor i śmiech.',
-        blank: 'h',
-        options: ['h', 'ch'],
-        answer: 'h',
-        hint: 'humor – wyraz łaciński, piszemy h!'
-      },
-      {
-        type: 'fill',
-        question: 'Wpisz ch lub h:',
-        sentence: '__łopiec śpie__ał w do__u.',
-        blanks: ['ch', 'ch', 'ch'],
-        inputs: [
-          { placeholder: 'ch/h', answer: 'ch' },
-          { placeholder: 'ch/h', answer: 'ch' },
-          { placeholder: 'ch/h', answer: 'ch' }
-        ]
-      },
-      {
-        type: 'sort',
-        question: 'Przyporządkuj wyrazy:',
-        columns: ['CH', 'H'],
-        words: [
-          { word: 'chleb', col: 'CH' },
-          { word: 'humor', col: 'H' },
-          { word: 'mucha', col: 'CH' },
-          { word: 'herbata', col: 'H' },
-          { word: 'suchy', col: 'CH' },
-          { word: 'historia', col: 'H' }
+        type:'sort',
+        question:'Przyporządkuj wyrazy – wybierz właściwą pisownię:',
+        columns:['CH','H'],
+        words:[
+          { stem:'_leb',    answer:'ch', col:'CH', display:'chleb' },
+          { stem:'_umor',   answer:'h',  col:'H',  display:'humor' },
+          { stem:'mu_a',    answer:'ch', col:'CH', display:'mucha' },
+          { stem:'_erbata', answer:'h',  col:'H',  display:'herbata' },
+          { stem:'su_y',    answer:'ch', col:'CH', display:'suchy' },
+          { stem:'_istoria',answer:'h',  col:'H',  display:'historia' },
         ]
       }
     ],
     dictation: {
-      intro: 'Dyktando z ch i h! Czy pamiętasz zasady? Pisz śmiało! 🎤',
-      text: 'Chłopiec pił herbatę z cukrem. Mucha siedziała na chlebie. Historia o trollu była ciekawa. Śmiech to zdrowie!',
+      clickText: '{Ch|H}łopiec pił {h|ch}erbatę z cukrem. Mu{ch|h}a siedziała na {ch|h}lebie. {H|Ch}istoria o trollu była ciekawa. Śmie{ch|h} to zdrowie!',
+      speakText: 'Chłopiec pił herbatę z cukrem. Mucha siedziała na chlebie. Historia o trollu była ciekawa. Śmiech to zdrowie!',
       hint: 'Zwróć uwagę na: chłopiec, herbatę, mucha, chlebie, historia, śmiech'
     }
   },
 
-  // ─────────────────────────────────────────────────────────
+  // ─── Ą / Ę ───────────────────────────────────────────────
   {
     id: 'ae',
     letters: 'Ą / Ę',
     icon: '🟣',
     title: 'Kiedy pisać Ą, a kiedy Ę?',
-    theoryIntro: 'Ą i ę to polskie literki z ogonkami! Posłuchaj, jak je wymówić i kiedy pisać! 🦋',
+    theoryIntro: 'Ą i ę to polskie literki z ogonkami! Posłuchaj, kiedy je pisać! 🦋',
     theory: `
       <div class="theory-section">
         <div class="rule-box">
-          <h3>📌 <span class="highlight">Ą</span> piszemy na końcu wyrazów (czasowniki w 3. os. l. mn.)</h3>
+          <h3>📌 <span class="highlight">Ą</span> – czasowniki w 3. osobie liczby mnogiej</h3>
           <ul class="example-list">
-            <li>dzieci grają</li>
-            <li>chłopcy biegają</li>
-            <li>ptaki śpiewają</li>
-            <li>koty śpią</li>
+            <li>oni grają</li><li>dzieci biegają</li><li>ptaki śpiewają</li><li>koty śpią</li>
           </ul>
         </div>
         <div class="rule-box">
-          <h3>📌 <span class="highlight">Ę</span> piszemy na końcu wyrazów (czasowniki w 1. os. l. poj.)</h3>
+          <h3>📌 <span class="highlight">Ę</span> – czasowniki w 1. osobie liczby pojedynczej</h3>
           <ul class="example-list">
-            <li>ja gram – grającą</li>
-            <li>ja czytam – czytającą</li>
-            <li>widzę</li>
-            <li>czytam – czytającę? NIE: piszę</li>
+            <li>ja widzę</li><li>ja piszę</li><li>ja czytam… ale: ja czytaję? NIE – ja czytam</li>
           </ul>
         </div>
         <div class="rule-box">
-          <h3>📌 <span class="highlight">Ę</span> piszemy przed b, p (ęb, ęp) i na końcu wyrazu</h3>
+          <h3>📌 <span class="highlight">Ą</span> przed b i p w środku wyrazu</h3>
           <ul class="example-list">
-            <li>dę<span class="highlight">b</span></li>
-            <li>cz<span class="highlight">ę</span>ść</li>
-            <li>pi<span class="highlight">ę</span>kny</li>
-            <li>r<span class="highlight">ę</span>ka</li>
+            <li>ząb</li><li>dąb</li><li>wąski</li><li>kąpać</li>
           </ul>
         </div>
         <div class="rule-box">
-          <h3>📌 <span class="highlight">Ą</span> piszemy przed b, p (ąb, ąp) w środku wyrazu</h3>
+          <h3>📌 <span class="highlight">Ę</span> na końcu wyrazu i przed b, p</h3>
           <ul class="example-list">
-            <li>ząb</li>
-            <li>dąb</li>
-            <li>wąski</li>
-            <li>kąpać</li>
+            <li>ręka</li><li>część</li><li>piękny</li><li>dąb ale: dęby!</li>
           </ul>
         </div>
         <div class="theory-tip">
-          <strong>🧠 Sztuczka Leosia:</strong> Jeśli mówisz <em>"ja..."</em> – często końcówka to <strong>ę</strong>. Jeśli mówisz <em>"oni/one..."</em> – często końcówka to <strong>ą</strong>!<br>
+          <strong>🧠 Sztuczka Leosia:</strong> <em>"ja..."</em> → często <strong>ę</strong>. <em>"oni/one..."</em> → często <strong>ą</strong>!<br>
           Np. <em>ja widzę / oni widzą</em>
         </div>
-      </div>
-    `,
+      </div>`,
     exercises: [
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Ptaki wesoło śpiewaj__.', options:['ą','ę'], answer:'ą', hint:'ptaki śpiewają – oni/one → ą!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Ja widz__ piękny las.', options:['ę','ą'], answer:'ę', hint:'ja widzę – pierwsza osoba → ę!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'W lesie rośnie stary d__b.', options:['ą','ę'], answer:'ą', hint:'dąb – ą przed b w środku wyrazu!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Mam piękną r__kę.', options:['ę','ą'], answer:'ę', hint:'ręka – ę przed k!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Chłopcy biegaj__ po boisku.', options:['ą','ę'], answer:'ą', hint:'chłopcy biegają – oni → ą!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Ja piszę i czytam, a oni śpij__.', options:['ą','ę'], answer:'ą', hint:'oni śpią – oni → ą!' },
+      { type:'choice', question:'Wybierz właściwą literę:', sentence:'Ta pi__kna sukienka jest różowa.', options:['ę','ą'], answer:'ę', hint:'piękna – ę w środku wyrazu!' },
+      { type:'fill', question:'Wpisz ą lub ę:', sentence:'Dzieci biegaj__ i śpiewaj__, a ja słucham i widz__ je z okna.', inputs:[{placeholder:'ą/ę',answer:'ą'},{placeholder:'ą/ę',answer:'ą'},{placeholder:'ą/ę',answer:'ę'}] },
+      { type:'fill', question:'Wpisz ą lub ę:', sentence:'W ogrodzie rosn__ d__by i kwiaty.', inputs:[{placeholder:'ą/ę',answer:'ą'},{placeholder:'ą/ę',answer:'ą'}] },
       {
-        type: 'choice',
-        question: 'Wybierz właściwą literę:',
-        sentence: 'Ptaki wesoło śpiewaj__.',
-        blank: 'ą/ę',
-        options: ['ą', 'ę'],
-        answer: 'ą',
-        hint: 'ptaki śpiewają – oni/one, więc ą!'
-      },
-      {
-        type: 'choice',
-        question: 'Wybierz właściwą literę:',
-        sentence: 'Ja widz__ piękny las.',
-        blank: 'ę',
-        options: ['ę', 'ą'],
-        answer: 'ę',
-        hint: 'ja widzę – pierwsza osoba, więc ę!'
-      },
-      {
-        type: 'choice',
-        question: 'Wybierz właściwą literę:',
-        sentence: 'W lesie rośnie stary d__b.',
-        blank: 'ą',
-        options: ['ą', 'ę'],
-        answer: 'ą',
-        hint: 'dąb – ą przed b!'
-      },
-      {
-        type: 'fill',
-        question: 'Wpisz ą lub ę:',
-        sentence: 'Dzieci biegaj__ i śpiewaj__, a ja słucham i widz__ je z okna.',
-        blanks: ['ą', 'ą', 'ę'],
-        inputs: [
-          { placeholder: 'ą/ę', answer: 'ą' },
-          { placeholder: 'ą/ę', answer: 'ą' },
-          { placeholder: 'ą/ę', answer: 'ę' }
-        ]
-      },
-      {
-        type: 'sort',
-        question: 'Przyporządkuj wyrazy:',
-        columns: ['Ą', 'Ę'],
-        words: [
-          { word: 'dąb', col: 'Ą' },
-          { word: 'ręka', col: 'Ę' },
-          { word: 'wąski', col: 'Ą' },
-          { word: 'część', col: 'Ę' },
-          { word: 'śpią', col: 'Ą' },
-          { word: 'piszę', col: 'Ę' }
+        type:'sort',
+        question:'Przyporządkuj wyrazy – wybierz właściwą pisownię:',
+        columns:['Ą','Ę'],
+        words:[
+          { stem:'d_b',    answer:'ą', col:'Ą', display:'dąb' },
+          { stem:'r_ka',   answer:'ę', col:'Ę', display:'ręka' },
+          { stem:'w_ski',  answer:'ą', col:'Ą', display:'wąski' },
+          { stem:'cz_ść',  answer:'ę', col:'Ę', display:'część' },
+          { stem:'śpią_',  answer:'ą', col:'Ą', display:'śpią' },
+          { stem:'pisz_',  answer:'ę', col:'Ę', display:'piszę' },
         ]
       }
     ],
     dictation: {
-      intro: 'Dyktando z ą i ę! Uważaj na ogonki! Pisz dokładnie! 🎤',
-      text: 'Dzieci biegają i śpiewają w ogrodzie. Ja widzę piękne kwiaty. Dąb rośnie przy rzece. Ręka Kasi jest ciepła.',
+      clickText: 'Dzieci biegaj{ą|ę} i śpiewaj{ą|ę} w ogrodzie. Ja widz{ę|ą} pi{ę|ą}kne kwiaty. D{ą|ę}b rośnie przy rzece. R{ę|ą}ka Kasi jest ciepła.',
+      speakText: 'Dzieci biegają i śpiewają w ogrodzie. Ja widzę piękne kwiaty. Dąb rośnie przy rzece. Ręka Kasi jest ciepła.',
       hint: 'Zwróć uwagę na: biegają, śpiewają, widzę, piękne, dąb, ręka'
     }
   },
 
-  // ─────────────────────────────────────────────────────────
+  // ─── NIE- ─────────────────────────────────────────────────
   {
     id: 'nie',
     letters: 'NIE-',
     icon: '🟤',
     title: 'Pisownia NIE z różnymi częściami mowy',
-    theoryIntro: 'Kiedy "nie" piszemy razem, a kiedy osobno? To jedno z ważniejszych pytań w ortografii! Ja wiem! 😄',
+    theoryIntro: 'Kiedy "nie" piszemy razem, kiedy osobno? Wiem dokładnie! 😄',
     theory: `
       <div class="theory-section">
         <div class="rule-box">
-          <h3>📌 Z przymiotnikami i przysłówkami piszemy <span class="highlight">RAZEM</span></h3>
+          <h3>📌 Z przymiotnikami i przysłówkami – <span class="highlight-green">RAZEM</span></h3>
           <ul class="example-list">
             <li><span class="highlight">nie</span>duży</li>
             <li><span class="highlight">nie</span>ładny</li>
             <li><span class="highlight">nie</span>wesoły</li>
             <li><span class="highlight">nie</span>daleko</li>
-            <li><span class="highlight">nie</span>wysoki</li>
           </ul>
         </div>
         <div class="rule-box">
-          <h3>📌 Z rzeczownikami piszemy <span class="highlight">RAZEM</span></h3>
+          <h3>📌 Z rzeczownikami – <span class="highlight-green">RAZEM</span></h3>
           <ul class="example-list">
             <li><span class="highlight">nie</span>szczęście</li>
-            <li><span class="highlight">nie</span>uwaga</li>
             <li><span class="highlight">nie</span>pokój</li>
-            <li><span class="highlight">nie</span>przyjaźń</li>
+            <li><span class="highlight">nie</span>uwaga</li>
           </ul>
         </div>
         <div class="rule-box">
-          <h3>📌 Z czasownikami piszemy <span class="highlight">OSOBNO</span></h3>
+          <h3>📌 Z czasownikami – <span class="highlight">OSOBNO</span></h3>
           <ul class="example-list">
             <li><span class="highlight">nie</span> lubię</li>
             <li><span class="highlight">nie</span> chodzę</li>
             <li><span class="highlight">nie</span> widzę</li>
-            <li><span class="highlight">nie</span> mówię</li>
-          </ul>
-        </div>
-        <div class="rule-box">
-          <h3>📌 Wyjątek: z imiesłowami odmiennymi – <span class="highlight">RAZEM</span></h3>
-          <ul class="example-list">
-            <li><span class="highlight">nie</span>czytany</li>
-            <li><span class="highlight">nie</span>widziany</li>
           </ul>
         </div>
         <div class="theory-tip">
-          <strong>🧠 Sztuczka Leosia:</strong> Zapytaj – czy to czynność (czasownik)? → osobno! Czy to cecha (przymiotnik/przysłówek)? → razem!<br>
-          Np. <em>nie lubię (czynność = osobno)</em> / <em>nieładny (cecha = razem)</em>
+          <strong>🧠 Sztuczka Leosia:</strong> Czynność (czasownik)? → <strong>osobno</strong>! Cecha (przymiotnik/rzeczownik)? → <strong>razem</strong>!<br>
+          <em>nie lubię (czynność = osobno)</em> / <em>nieładny (cecha = razem)</em>
         </div>
-      </div>
-    `,
+      </div>`,
     exercises: [
+      { type:'choice', question:'Razem czy osobno?', sentence:'To jest (nie)ładna pogoda.', options:['nieładna','nie ładna'], answer:'nieładna', hint:'ładna = przymiotnik → razem!' },
+      { type:'choice', question:'Razem czy osobno?', sentence:'Ja (nie)lubię zimnej zupy.', options:['nie lubię','nielubię'], answer:'nie lubię', hint:'lubię = czasownik → osobno!' },
+      { type:'choice', question:'Razem czy osobno?', sentence:'Mama ma dzisiaj (nie)pokój.', options:['niepokój','nie pokój'], answer:'niepokój', hint:'niepokój = rzeczownik → razem!' },
+      { type:'choice', question:'Razem czy osobno?', sentence:'Pies (nie)biegnie do domu.', options:['nie biegnie','niebiegnie'], answer:'nie biegnie', hint:'biegnie = czasownik → osobno!' },
+      { type:'choice', question:'Razem czy osobno?', sentence:'To (nie)duże miasto ma piękny rynek.', options:['nieduże','nie duże'], answer:'nieduże', hint:'duże = przymiotnik → razem!' },
+      { type:'choice', question:'Razem czy osobno?', sentence:'Ania (nie)je śniadania.', options:['nie je','nieje'], answer:'nie je', hint:'je = czasownik → osobno!' },
+      { type:'choice', question:'Razem czy osobno?', sentence:'Popełniłem (nie)uwagę na lekcji.', options:['nieuwagę','nie uwagę'], answer:'nieuwagę', hint:'nieuwaga = rzeczownik → razem!' },
+      { type:'fill', question:'Wpisz nie (razem lub osobno):', sentence:'__duży pies __lubi kąpieli. To prawdziwe __szczęście.', inputs:[{placeholder:'nie-',answer:'Nie'},{placeholder:'nie ',answer:'nie '},{placeholder:'nie-',answer:'nie'}] },
       {
-        type: 'choice',
-        question: 'Razem czy osobno?',
-        sentence: 'To jest (nie)ładna pogoda.',
-        blank: 'nie',
-        options: ['nieładna', 'nie ładna'],
-        answer: 'nieładna',
-        hint: 'ładna = przymiotnik → nie piszemy razem!'
-      },
-      {
-        type: 'choice',
-        question: 'Razem czy osobno?',
-        sentence: 'Ja (nie)lubię zimna zupy.',
-        blank: 'nie',
-        options: ['nie lubię', 'nielubię'],
-        answer: 'nie lubię',
-        hint: 'lubię = czasownik → nie piszemy osobno!'
-      },
-      {
-        type: 'choice',
-        question: 'Razem czy osobno?',
-        sentence: 'Mama ma dzisiaj (nie)pokój.',
-        blank: 'nie',
-        options: ['niepokój', 'nie pokój'],
-        answer: 'niepokój',
-        hint: 'niepokój = rzeczownik → nie piszemy razem!'
-      },
-      {
-        type: 'choice',
-        question: 'Razem czy osobno?',
-        sentence: 'Pies (nie)biegnie do domu.',
-        blank: 'nie',
-        options: ['nie biegnie', 'niebiegnie'],
-        answer: 'nie biegnie',
-        hint: 'biegnie = czasownik → nie piszemy osobno!'
-      },
-      {
-        type: 'sort',
-        question: 'Przyporządkuj wyrażenia:',
-        columns: ['Razem', 'Osobno'],
-        words: [
-          { word: 'nieduży', col: 'Razem' },
-          { word: 'nie śpię', col: 'Osobno' },
-          { word: 'nieszczęście', col: 'Razem' },
-          { word: 'nie chodzę', col: 'Osobno' },
-          { word: 'niewesoły', col: 'Razem' },
-          { word: 'nie widzę', col: 'Osobno' }
+        type:'sort',
+        question:'Przyporządkuj – razem czy osobno?',
+        columns:['Razem','Osobno'],
+        words:[
+          { stem:'__duży',    answer:'nie', col:'Razem',  display:'nieduży' },
+          { stem:'__ śpię',   answer:'nie ', col:'Osobno', display:'nie śpię' },
+          { stem:'__szczęście',answer:'nie', col:'Razem',  display:'nieszczęście' },
+          { stem:'__ chodzę', answer:'nie ', col:'Osobno', display:'nie chodzę' },
+          { stem:'__wesoły',  answer:'nie', col:'Razem',  display:'niewesoły' },
+          { stem:'__ widzę',  answer:'nie ', col:'Osobno', display:'nie widzę' },
         ]
       }
     ],
     dictation: {
-      intro: 'Dyktando z pisownią NIE! Pamiętasz zasadę? Czasowniki – osobno, reszta – razem! 🎤',
-      text: 'Nieduży pies nie lubi kąpieli. Tomek nie ma dziś niezbyt dobrego humoru. Nieładna pogoda nie sprzyja spacerowi. To prawdziwe nieszczęście!',
+      clickText: '{Nie|Nie }duży pies {nie |nie}lubi kąpieli. Tomek {nie|nie }ma dziś {nie |nie}zbyt dobrego humoru. {Nie|Nie }ładna pogoda {nie |nie}sprzyja spacerowi. To prawdziwe {nie|nie }szczęście!',
+      speakText: 'Nieduży pies nie lubi kąpieli. Tomek nie ma dziś niezbyt dobrego humoru. Nieładna pogoda nie sprzyja spacerowi. To prawdziwe nieszczęście!',
       hint: 'Zwróć uwagę na: nieduży, nie lubi, nie ma, niezbyt, nieładna, nie sprzyja, nieszczęście'
     }
   },
 
-  // ─────────────────────────────────────────────────────────
+  // ─── Wielka litera ────────────────────────────────────────
   {
     id: 'caps',
     letters: 'Wielka litera',
     icon: '🟢',
     title: 'Kiedy pisać wielką literą?',
-    theoryIntro: 'Wielka litera to ważna zasada! Wiem dokładnie kiedy jej użyć. Posłuchaj! 🎓',
+    theoryIntro: 'Wielka litera to ważna zasada! Wiem kiedy jej użyć. Posłuchaj! 🎓',
     theory: `
       <div class="theory-section">
         <div class="rule-box">
-          <h3>📌 Wielką literą piszemy <span class="highlight">imiona i nazwiska</span></h3>
+          <h3>📌 Wielką literą – <span class="highlight">imiona i nazwiska</span></h3>
           <ul class="example-list">
-            <li><span class="highlight">K</span>asia</li>
-            <li><span class="highlight">T</span>omek</li>
-            <li><span class="highlight">K</span>owalski</li>
-            <li><span class="highlight">L</span>eoś</li>
+            <li><span class="highlight">K</span>asia</li><li><span class="highlight">T</span>omek</li>
+            <li><span class="highlight">K</span>owalski</li><li><span class="highlight">L</span>eoś</li>
           </ul>
         </div>
         <div class="rule-box">
-          <h3>📌 Wielką literą piszemy <span class="highlight">nazwy geograficzne</span></h3>
+          <h3>📌 Wielką literą – <span class="highlight">nazwy geograficzne</span></h3>
           <ul class="example-list">
-            <li><span class="highlight">P</span>olska</li>
-            <li><span class="highlight">W</span>arszawa</li>
-            <li><span class="highlight">W</span>isła</li>
-            <li><span class="highlight">T</span>atry</li>
-            <li><span class="highlight">E</span>uropa</li>
+            <li><span class="highlight">P</span>olska</li><li><span class="highlight">W</span>arszawa</li>
+            <li><span class="highlight">W</span>isła</li><li><span class="highlight">T</span>atry</li>
           </ul>
         </div>
         <div class="rule-box">
-          <h3>📌 Wielką literą zaczynamy <span class="highlight">każde zdanie</span></h3>
-          <p>Po kropce, pytajniku lub wykrzykniku zawsze wielka litera!</p>
+          <h3>📌 Wielką literą – <span class="highlight">początek zdania</span></h3>
           <ul class="example-list">
             <li><span class="highlight">M</span>ama gotuje obiad.</li>
             <li><span class="highlight">C</span>zy lubisz lody?</li>
           </ul>
         </div>
         <div class="rule-box">
-          <h3>📌 Wielką literą piszemy <span class="highlight">tytuły i święta</span></h3>
+          <h3>📌 Wielką literą – <span class="highlight">tytuły i święta</span></h3>
           <ul class="example-list">
             <li><span class="highlight">B</span>oże <span class="highlight">N</span>arodzenie</li>
             <li><span class="highlight">W</span>ielkanoc</li>
-            <li>"<span class="highlight">M</span>ały <span class="highlight">K</span>siążę"</li>
           </ul>
         </div>
         <div class="theory-tip">
-          <strong>🧠 Sztuczka Leosia:</strong> Czy to czyjaś nazwa własna (imię, miasto, kraj, rzeka)? → Wielka litera! Czy to zwykłe słowo opisujące? → mała litera.<br>
-          Np. <em>rzeka</em> (małą) ale <em>Wisła</em> (wielką)!
+          <strong>🧠 Sztuczka Leosia:</strong> Nazwa własna (imię, miasto, kraj, rzeka)? → Wielka litera!<br>
+          <em>rzeka</em> (małą) ale <em>Wisła</em> (wielką)!
         </div>
-      </div>
-    `,
+      </div>`,
     exercises: [
+      { type:'choice', question:'Jak poprawnie napisać?', sentence:'Mieszkam w __arszawie.', options:['Warszawa','warszawa'], answer:'Warszawa', hint:'Warszawa = nazwa miasta → wielka litera!' },
+      { type:'choice', question:'Jak poprawnie napisać?', sentence:'Mój pies ma na imię __urek.', options:['Burek','burek'], answer:'Burek', hint:'Burek = imię własne → wielka litera!' },
+      { type:'choice', question:'Jak poprawnie napisać?', sentence:'W sadzie rosną __abłka.', options:['jabłka','Jabłka'], answer:'jabłka', hint:'jabłka = zwykłe słowo → mała litera!' },
+      { type:'choice', question:'Jak poprawnie napisać?', sentence:'Zima minęła. __iosna nadeszła.', options:['Wiosna','wiosna'], answer:'Wiosna', hint:'Wiosna – zaczyna zdanie po kropce → wielka!' },
+      { type:'choice', question:'Jak poprawnie napisać?', sentence:'Przez __olskę płynie rzeka __isła.', options:['Polskę i Wisła','polskę i wisła'], answer:'Polskę i Wisła', hint:'Polska = kraj, Wisła = rzeka → wielkie litery!' },
+      { type:'choice', question:'Jak poprawnie napisać?', sentence:'Na __rzecież to mój __rat!', options:['przecie_ brat','Przecie_ Brat'], answer:'przecie_ brat', hint:'przecież i brat = zwykłe słowa → małe!' },
+      { type:'choice', question:'Jak poprawnie napisać?', sentence:'Leoś lubi podróżować po __uropie.', options:['Europie','europie'], answer:'Europie', hint:'Europa = kontynent → wielka litera!' },
+      { type:'fill', question:'Wpisz wielką lub małą literę (pierwsza litera wyrazu):', sentence:'__asia i __omek mieszkają w __arszawie nad __isłą.', inputs:[{placeholder:'K/k',answer:'K'},{placeholder:'T/t',answer:'T'},{placeholder:'W/w',answer:'W'},{placeholder:'W/w',answer:'W'}] },
       {
-        type: 'choice',
-        question: 'Jak poprawnie napisać?',
-        sentence: 'Mieszkam w __arszawie.',
-        blank: 'w/W',
-        options: ['Warszawa', 'warszawa'],
-        answer: 'Warszawa',
-        hint: 'Warszawa = nazwa miasta → wielka litera!'
-      },
-      {
-        type: 'choice',
-        question: 'Jak poprawnie napisać?',
-        sentence: 'Mój pies ma na imię __urek.',
-        blank: 'b/B',
-        options: ['Burek', 'burek'],
-        answer: 'Burek',
-        hint: 'Burek = imię własne psa → wielka litera!'
-      },
-      {
-        type: 'choice',
-        question: 'Jak poprawnie napisać?',
-        sentence: 'Lubię jeść __pple z ogrodu.',
-        blank: 'j/J',
-        options: ['jabłka', 'Jabłka'],
-        answer: 'jabłka',
-        hint: 'jabłka = zwykłe słowo, nie nazwa własna → mała litera!'
-      },
-      {
-        type: 'choice',
-        question: 'Jak poprawnie napisać?',
-        sentence: 'Zima minęła. __iosna nadeszła.',
-        blank: 'w/W',
-        options: ['Wiosna', 'wiosna'],
-        answer: 'Wiosna',
-        hint: 'Wiosna – zaczyna zdanie po kropce → wielka litera!'
-      },
-      {
-        type: 'sort',
-        question: 'Przyporządkuj wyrazy:',
-        columns: ['Wielka litera', 'Mała litera'],
-        words: [
-          { word: 'Kasia', col: 'Wielka litera' },
-          { word: 'jabłko', col: 'Mała litera' },
-          { word: 'Wisła', col: 'Wielka litera' },
-          { word: 'rzeka', col: 'Mała litera' },
-          { word: 'Polska', col: 'Wielka litera' },
-          { word: 'kraj', col: 'Mała litera' }
+        type:'sort',
+        question:'Przyporządkuj wyrazy – wielka czy mała litera?',
+        columns:['Wielka litera','Mała litera'],
+        words:[
+          { stem:'_asia',   answer:'K', col:'Wielka litera', display:'Kasia' },
+          { stem:'_abłko',  answer:'j', col:'Mała litera',   display:'jabłko' },
+          { stem:'_isła',   answer:'W', col:'Wielka litera', display:'Wisła' },
+          { stem:'_zeka',   answer:'r', col:'Mała litera',   display:'rzeka' },
+          { stem:'_olska',  answer:'P', col:'Wielka litera', display:'Polska' },
+          { stem:'_raj',    answer:'k', col:'Mała litera',   display:'kraj' },
         ]
       }
     ],
     dictation: {
-      intro: 'Dyktando! Uważaj na wielkie litery – może będą na początku zdania albo w nazwie własnej! 🎤',
-      text: 'Kasia i Tomek mieszkają w Polsce. Wisła płynie przez Warszawę. W Tatrach mieszka dużo zwierząt. Leoś lubi podróżować po Europie!',
-      hint: 'Zwróć uwagę na wielkie litery: Kasia, Tomek, Polsce, Wisła, Warszawę, Tatrach, Leoś, Europie'
+      clickText: '{K|k}asia i {T|t}omek mieszkają w {P|p}olsce. {W|w}isła płynie przez {W|w}arszawę. W {T|t}atrach mieszka dużo zwierząt. {L|l}eoś lubi podróżować po {E|e}uropie!',
+      speakText: 'Kasia i Tomek mieszkają w Polsce. Wisła płynie przez Warszawę. W Tatrach mieszka dużo zwierząt. Leoś lubi podróżować po Europie!',
+      hint: 'Wielkie litery: Kasia, Tomek, Polsce, Wisła, Warszawę, Tatrach, Leoś, Europie'
     }
   }
 ];
@@ -675,27 +479,98 @@ function addScore(pts) {
   State.saveScores();
   updateScoreDisplay();
 
-  // Show floating +points
   const badge = document.createElement('div');
   badge.className = 'score-pop';
   badge.textContent = '+' + pts + ' pkt';
-  badge.style.cssText = 'position:fixed;top:80px;right:20px;background:#ffd600;color:#1b5e20;padding:.4rem 1rem;border-radius:50px;font-weight:900;font-size:1.1rem;z-index:9999;animation:scorePop .8s ease forwards';
+  badge.style.cssText =
+    'position:fixed;top:80px;right:20px;background:#fbbf24;color:#78350f;' +
+    'padding:.4rem 1rem;border-radius:50px;font-weight:900;font-size:1.1rem;' +
+    'z-index:9999;animation:scorePop .9s ease forwards;pointer-events:none';
   document.body.appendChild(badge);
-  setTimeout(() => badge.remove(), 900);
+  setTimeout(() => badge.remove(), 950);
 }
 
-// inject keyframe
-const styleTag = document.createElement('style');
-styleTag.textContent = `@keyframes scorePop{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-50px) scale(1.3)}}`;
-document.head.appendChild(styleTag);
+// inject keyframe once
+(function() {
+  const s = document.createElement('style');
+  s.textContent = `@keyframes scorePop{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-55px) scale(1.4)}}`;
+  document.head.appendChild(s);
+})();
+
+// ============================================================
+//  SPEECH (TTS)
+// ============================================================
+const TTS = {
+  _utt: null,
+  speak(text, rate = 1) {
+    if (!window.speechSynthesis) return;
+    this.stop();
+    this._utt = new SpeechSynthesisUtterance(text);
+    this._utt.lang = 'pl-PL';
+    this._utt.rate = rate;
+    // try to pick a Polish voice
+    const voices = speechSynthesis.getVoices();
+    const plVoice = voices.find(v => v.lang.startsWith('pl'));
+    if (plVoice) this._utt.voice = plVoice;
+    speechSynthesis.speak(this._utt);
+    return this._utt;
+  },
+  stop() {
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    this._utt = null;
+  },
+  isSpeaking() { return window.speechSynthesis && speechSynthesis.speaking; }
+};
+
+// ============================================================
+//  DICTATION – CLICK-TO-CHOOSE (Type 1)
+// ============================================================
+function parseClickText(raw) {
+  // Format: literal text with {correct|alt} blocks
+  const parts = [];
+  const re = /\{([^|]+)\|([^}]+)\}/g;
+  let last = 0, m;
+  while ((m = re.exec(raw)) !== null) {
+    if (m.index > last) parts.push({ type: 'text', value: raw.slice(last, m.index) });
+    parts.push({ type: 'choice', answer: m[1], options: [m[1], m[2]], selected: null });
+    last = m.index + m[0].length;
+  }
+  if (last < raw.length) parts.push({ type: 'text', value: raw.slice(last) });
+  return parts;
+}
+
+let _clickParts = [];
+
+function renderClickDictation(rule) {
+  _clickParts = parseClickText(rule.dictation.clickText);
+  const container = document.getElementById('click-dict-area');
+  if (!container) return;
+
+  let html = '<div class="click-dict-text">';
+  _clickParts.forEach((p, i) => {
+    if (p.type === 'text') {
+      html += p.value;
+    } else {
+      html += `<span class="dict-choice-token" data-idx="${i}" onclick="App.toggleToken(this, ${i})">
+        <span class="token-label">${p.options[0]}/${p.options[1]}</span>
+        <div class="token-options">
+          ${p.options.map(o => `<button class="token-option" onclick="event.stopPropagation();App.selectToken(${i},'${o}',this.closest('.dict-choice-token'))">${o}</button>`).join('')}
+        </div>
+      </span>`;
+    }
+  });
+  html += '</div>';
+
+  document.getElementById('click-dict-result').style.display = 'none';
+  document.getElementById('click-dict-result').innerHTML = '';
+  container.innerHTML = html;
+}
 
 // ============================================================
 //  APP CONTROLLER
 // ============================================================
 const App = {
-  showWelcome() {
-    showScreen('screen-welcome');
-  },
+  showWelcome() { showScreen('screen-welcome'); },
 
   showMenu() {
     showScreen('screen-menu');
@@ -717,18 +592,17 @@ const App = {
         <span class="rule-card-icon">${rule.icon}</span>
         <div class="rule-card-letters">${rule.letters}</div>
         <div class="rule-card-title">${rule.title}</div>
-        <div class="rule-card-stars">${stars}</div>
-      `;
+        <div class="rule-card-stars">${stars}</div>`;
       card.addEventListener('click', () => this.openRule(idx));
       grid.appendChild(card);
     });
   },
 
   _scoreToStars(score, max) {
-    const pct = score / max;
-    if (pct <= 0) return '☆☆☆';
-    if (pct < 0.5) return '★☆☆';
-    if (pct < 0.8) return '★★☆';
+    const p = score / max;
+    if (p <= 0)  return '☆☆☆';
+    if (p < 0.5) return '★☆☆';
+    if (p < 0.8) return '★★☆';
     return '★★★';
   },
 
@@ -742,8 +616,6 @@ const App = {
     this._renderTheory(rule);
     this._renderExercises(rule);
     this._renderDictation(rule);
-
-    // reset tabs
     this.switchTab('theory');
     updateScoreDisplay();
     showScreen('screen-rule');
@@ -751,113 +623,116 @@ const App = {
 
   switchTab(name) {
     State.currentTab = name;
-    document.querySelectorAll('.tab').forEach(t => {
-      t.classList.toggle('active', t.dataset.tab === name);
-    });
-    document.querySelectorAll('.tab-content').forEach(tc => {
-      tc.classList.toggle('active', tc.id === 'tab-' + name);
-    });
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.toggle('active', tc.id === 'tab-' + name));
     window.scrollTo(0, 0);
   },
 
-  // ── THEORY ────────────────────────────────────────────────
+  // ── THEORY ──────────────────────────────────────────────
   _renderTheory(rule) {
-    document.getElementById('theory-intro').innerHTML = rule.theoryIntro;
+    const intro = document.getElementById('theory-intro');
+    intro.innerHTML = rule.theoryIntro;
     document.getElementById('theory-content').innerHTML = rule.theory;
+    // Leoś talks when theory is shown
+    setTimeout(() => leosTalk(2800), 300);
   },
 
-  // ── EXERCISES ─────────────────────────────────────────────
-  _renderExercises(rule) {
-    this._showExercise(rule, 0);
-  },
+  // ── EXERCISES ───────────────────────────────────────────
+  _renderExercises(rule) { this._showExercise(rule, 0); },
 
   _showExercise(rule, idx) {
     const ex = rule.exercises[idx];
     if (!ex) return;
     State.currentExerciseIdx = idx;
 
-    const area = document.getElementById('exercise-area');
-    const counter = document.getElementById('exercise-counter');
+    const area     = document.getElementById('exercise-area');
+    const counter  = document.getElementById('exercise-counter');
     const feedback = document.getElementById('exercise-feedback');
     feedback.className = 'feedback hidden';
 
     counter.textContent = `${idx + 1} / ${rule.exercises.length}`;
-
-    // progress bar
-    const pct = Math.round(((idx) / rule.exercises.length) * 100);
-    let progHtml = `<div class="progress-bar-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>`;
+    const pct = Math.round((idx / rule.exercises.length) * 100);
+    const prog = `<div class="progress-bar-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>`;
 
     if (ex.type === 'choice') {
-      area.innerHTML = progHtml + `
+      area.innerHTML = prog + `
         <div class="exercise-card">
           <span class="exercise-type-badge">Wybierz odpowiedź</span>
           <div class="exercise-question">${ex.question}</div>
           <div class="exercise-sentence">${ex.sentence}</div>
-          <div class="choices" id="choices">
-            ${ex.options.map(opt => `
-              <button class="choice-btn" onclick="App.answerChoice('${opt}', this)">
-                ${opt}
-              </button>`).join('')}
+          <div class="choices">
+            ${ex.options.map(o => `<button class="choice-btn" onclick="App.answerChoice('${o}',this)">${o}</button>`).join('')}
           </div>
         </div>`;
+
     } else if (ex.type === 'fill') {
       let sent = ex.sentence;
       ex.inputs.forEach((inp, i) => {
-        sent = sent.replace('__', `<input class="blank-input" id="blank-${i}" placeholder="${inp.placeholder}" maxlength="4" />`);
+        sent = sent.replace('__', `<input class="blank-input" id="blank-${i}" placeholder="${inp.placeholder}" maxlength="6" />`);
       });
-      area.innerHTML = progHtml + `
+      area.innerHTML = prog + `
         <div class="exercise-card">
           <span class="exercise-type-badge">Uzupełnij luki</span>
           <div class="exercise-question">${ex.question}</div>
           <div class="exercise-sentence">${sent}</div>
           <button class="btn btn-green submit-btn" onclick="App.answerFill()">Sprawdź</button>
         </div>`;
+
     } else if (ex.type === 'sort') {
-      const shuffled = [...ex.words].sort(() => Math.random() - .5);
-      area.innerHTML = progHtml + `
-        <div class="exercise-card">
-          <span class="exercise-type-badge">Posortuj wyrazy</span>
-          <div class="exercise-question">${ex.question}</div>
-          <div class="word-bank" id="word-bank">
-            ${shuffled.map(w => `
-              <span class="sort-word" id="sw-${w.word}" draggable="true">${w.word}</span>`).join('')}
-          </div>
-          <div class="sort-container">
-            ${ex.columns.map(col => `
-              <div class="sort-column" id="sc-${col}" ondragover="event.preventDefault()" ondrop="App.dropWord(event, '${col}')">
-                <h4>${col}</h4>
-              </div>`).join('')}
-          </div>
-          <button class="btn btn-green submit-btn" onclick="App.answerSort()">Sprawdź</button>
-        </div>`;
-      // drag events
-      shuffled.forEach(w => {
-        const el = document.getElementById('sw-' + w.word);
-        if (el) el.addEventListener('dragstart', e => e.dataTransfer.setData('text', w.word));
-      });
+      this._renderSortExercise(ex, prog, area);
     }
 
-    // nav button states
     document.getElementById('btn-prev-ex').style.visibility = idx === 0 ? 'hidden' : 'visible';
     const nextBtn = document.getElementById('btn-next-ex');
     nextBtn.textContent = idx === rule.exercises.length - 1 ? 'Wyniki ✓' : 'Dalej →';
   },
 
+  _renderSortExercise(ex, prog, area) {
+    const shuffled = [...ex.words].sort(() => Math.random() - .5);
+    area.innerHTML = prog + `
+      <div class="exercise-card">
+        <span class="exercise-type-badge">Posortuj wyrazy</span>
+        <div class="exercise-question">${ex.question}</div>
+        <div class="word-bank" id="word-bank">
+          ${shuffled.map(w => {
+            // Show stem with _ as a visual slot
+            const display = w.stem.replace('_', '<span class="blank-slot">_</span>');
+            return `<span class="sort-word" id="sw-${w.stem}" data-stem="${w.stem}" data-answer="${w.answer}" data-display="${w.display}" draggable="true">${display}</span>`;
+          }).join('')}
+        </div>
+        <div class="sort-container">
+          ${ex.columns.map(col => `
+            <div class="sort-column" id="sc-${col}"
+              ondragover="event.preventDefault();this.classList.add('drag-over')"
+              ondragleave="this.classList.remove('drag-over')"
+              ondrop="App.dropWord(event,'${col}')">
+              <h4>${col}</h4>
+            </div>`).join('')}
+        </div>
+        <button class="btn btn-green submit-btn" onclick="App.answerSort()">Sprawdź</button>
+      </div>`;
+
+    shuffled.forEach(w => {
+      const el = document.getElementById('sw-' + w.stem);
+      if (el) el.addEventListener('dragstart', e => e.dataTransfer.setData('text', w.stem));
+    });
+  },
+
   dropWord(event, col) {
-    const word = event.dataTransfer.getData('text');
-    const el = document.getElementById('sw-' + word);
+    event.preventDefault();
+    document.querySelectorAll('.sort-column').forEach(c => c.classList.remove('drag-over'));
+    const stem = event.dataTransfer.getData('text');
+    const el = document.getElementById('sw-' + stem);
     if (el) {
       el.remove();
-      const colEl = document.getElementById('sc-' + col);
-      colEl.appendChild(el);
+      event.currentTarget.appendChild(el);
     }
   },
 
   answerChoice(opt, btn) {
     const rule = RULES[State.currentRuleIdx];
-    const ex = rule.exercises[State.currentExerciseIdx];
+    const ex   = rule.exercises[State.currentExerciseIdx];
     const correct = opt === ex.answer;
-
     document.querySelectorAll('.choice-btn').forEach(b => b.classList.add('disabled'));
     btn.classList.add(correct ? 'correct' : 'wrong');
     if (!correct) {
@@ -865,7 +740,6 @@ const App = {
         if (b.textContent.trim() === ex.answer) b.classList.add('correct');
       });
     }
-
     this._showFeedback(correct, ex.hint);
     if (correct) addScore(10);
     State.exerciseAnswers[State.currentExerciseIdx] = correct;
@@ -873,22 +747,17 @@ const App = {
 
   answerFill() {
     const rule = RULES[State.currentRuleIdx];
-    const ex = rule.exercises[State.currentExerciseIdx];
+    const ex   = rule.exercises[State.currentExerciseIdx];
     let allCorrect = true;
-
     ex.inputs.forEach((inp, i) => {
       const el = document.getElementById('blank-' + i);
       if (!el) return;
       const val = el.value.toLowerCase().trim();
-      const correct = val === inp.answer.toLowerCase();
-      el.classList.add(correct ? 'correct' : 'wrong');
+      const ok  = val === inp.answer.toLowerCase().trim();
+      el.classList.add(ok ? 'correct' : 'wrong');
       el.disabled = true;
-      if (!correct) {
-        allCorrect = false;
-        el.value = inp.answer; // show correct answer
-      }
+      if (!ok) { allCorrect = false; el.value = inp.answer; }
     });
-
     document.querySelector('.submit-btn').disabled = true;
     this._showFeedback(allCorrect, '');
     if (allCorrect) addScore(10);
@@ -897,25 +766,28 @@ const App = {
 
   answerSort() {
     const rule = RULES[State.currentRuleIdx];
-    const ex = rule.exercises[State.currentExerciseIdx];
-    let correct = 0, total = ex.words.length;
+    const ex   = rule.exercises[State.currentExerciseIdx];
+    let correct = 0;
 
     ex.words.forEach(w => {
-      const el = document.getElementById('sw-' + w.word);
+      const el = document.getElementById('sw-' + w.stem);
       if (!el) return;
       const parent = el.closest('.sort-column');
-      const colId = parent ? parent.id.replace('sc-', '') : '';
+      const colId  = parent ? parent.id.replace('sc-', '') : '';
       if (colId === w.col) {
         correct++;
-        el.style.background = '#c8e6c9'; el.style.borderColor = 'var(--green-mid)';
+        el.style.background = '#dcfce7'; el.style.borderColor = 'var(--green)';
+        // Reveal the correct spelling
+        el.innerHTML = `<span class="blank-slot revealed">${w.display}</span>`;
       } else {
-        el.style.background = '#ffcdd2'; el.style.borderColor = 'var(--red)';
+        el.style.background = 'var(--red-pale)'; el.style.borderColor = 'var(--red)';
+        el.innerHTML = `<span style="color:var(--red)">${w.display}</span>`;
       }
     });
 
     document.querySelector('.submit-btn').disabled = true;
-    const allOk = correct === total;
-    this._showFeedback(allOk, `Poprawnych: ${correct} z ${total}`);
+    const allOk = correct === ex.words.length;
+    this._showFeedback(allOk, `Poprawnych: ${correct} z ${ex.words.length}`);
     if (allOk) addScore(10);
     State.exerciseAnswers[State.currentExerciseIdx] = allOk;
   },
@@ -924,8 +796,9 @@ const App = {
     const fb = document.getElementById('exercise-feedback');
     fb.className = 'feedback ' + (correct ? 'correct-fb' : 'wrong-fb');
     if (correct) {
-      const msgs = ['Super! 🎉', 'Brawo! 🌟', 'Znakomicie! ✨', 'Tak trzymaj! 👏', 'Leoś jest z ciebie dumny! 🌈'];
+      const msgs = ['Super! 🎉', 'Brawo! 🌟', 'Znakomicie! ✨', 'Tak trzymaj! 👏', 'Leoś jest z ciebie dumny! 🌈', 'Niesamowite! 🏆'];
       fb.textContent = '✓ ' + msgs[Math.floor(Math.random() * msgs.length)];
+      leosTalk(1600);
     } else {
       fb.innerHTML = '✗ Prawie! ' + (hint ? '<em>' + hint + '</em>' : 'Spróbuj jeszcze raz!');
     }
@@ -941,39 +814,33 @@ const App = {
 
   nextExercise() {
     const rule = RULES[State.currentRuleIdx];
-    const idx = State.currentExerciseIdx;
+    const idx  = State.currentExerciseIdx;
     if (idx < rule.exercises.length - 1) {
       document.getElementById('exercise-feedback').className = 'feedback hidden';
       this._showExercise(rule, idx + 1);
     } else {
-      // Show results
       this._showResults(rule);
     }
   },
 
   _showResults(rule) {
-    const total = rule.exercises.length;
+    const total   = rule.exercises.length;
     const correct = State.exerciseAnswers.filter(Boolean).length;
-    const pct = correct / total;
+    const pct     = correct / total;
 
     document.getElementById('results-correct').textContent = correct;
-    document.getElementById('results-total').textContent = total;
+    document.getElementById('results-total').textContent   = total;
 
     let title, stars, msg;
-    if (pct === 1) {
-      title = 'Fantastycznie! 🏆'; stars = '★★★'; msg = 'Leoś jest z ciebie bardzo dumny! Wszystko bezbłędnie!';
-      addScore(30);
-    } else if (pct >= 0.6) {
-      title = 'Dobrze! 🌟'; stars = '★★☆'; msg = 'Prawie idealnie! Wróć do teorii i spróbuj jeszcze raz!';
-      addScore(15);
-    } else {
-      title = 'Spróbuj jeszcze! 💪'; stars = '★☆☆'; msg = 'Nie martw się! Przeczytaj teorię raz jeszcze i ćwicz dalej!';
-    }
+    if (pct === 1)      { title='Fantastycznie! 🏆'; stars='★★★'; msg='Leoś jest z ciebie bardzo dumny! Wszystko bezbłędnie!'; addScore(30); }
+    else if (pct >= .6) { title='Dobrze! 🌟';        stars='★★☆'; msg='Prawie idealnie! Wróć do teorii i spróbuj jeszcze raz!'; addScore(15); }
+    else                { title='Spróbuj jeszcze! 💪'; stars='★☆☆'; msg='Nie martw się! Przeczytaj teorię i ćwicz dalej!'; }
 
-    document.getElementById('results-title').textContent = title;
-    document.getElementById('results-stars').textContent = stars;
+    document.getElementById('results-title').textContent   = title;
+    document.getElementById('results-stars').textContent   = stars;
     document.getElementById('results-message').textContent = msg;
     showScreen('screen-results');
+    setTimeout(() => leosTalk(2000), 400);
   },
 
   retryExercises() {
@@ -987,95 +854,165 @@ const App = {
   // ── DICTATION ─────────────────────────────────────────────
   _renderDictation(rule) {
     const d = rule.dictation;
-    document.getElementById('dictation-intro').textContent = d.intro;
+    document.getElementById('dictation-intro').textContent =
+      'Wybierz rodzaj dyktanda i ćwicz! 🎤';
 
-    const area = document.getElementById('dictation-area');
-    area.innerHTML = `
-      <div class="dictation-card">
-        <h3 style="color:var(--green-dark);margin-bottom:.8rem;">📖 Przeczytaj i zapamiętaj:</h3>
-        <div class="dictation-text" id="dictation-original">${d.text}</div>
-        <p style="font-size:.9rem;color:#888;margin-bottom:.5rem">Teraz zakryj tekst i wpisz z pamięci:</p>
-        <textarea class="dictation-input" id="dictation-input" placeholder="Pisz tutaj..." spellcheck="false"></textarea>
-        <div class="dictation-actions">
-          <button class="btn btn-green" onclick="App.checkDictation()">Sprawdź ✓</button>
-          <button class="btn btn-outline dictation-reveal-btn" onclick="App.toggleOriginal()">
-            Pokaż/ukryj tekst
-          </button>
-          <button class="btn btn-outline" onclick="App.resetDictation()">Wyczyść</button>
-        </div>
-        <div id="dictation-result" class="dictation-result" style="display:none"></div>
-        <div class="theory-tip" style="margin-top:1rem">
-          <strong>💡 Wskazówka:</strong> ${d.hint}
-        </div>
-      </div>`;
+    // Click dictation
+    renderClickDictation(rule);
 
-    // Initially hide original text hint
-    this._dictationOriginalVisible = true;
+    // Audio dictation
+    const audioArea = document.getElementById('audio-dict-area');
+    if (audioArea) {
+      audioArea.innerHTML = `
+        <div class="dictation-card">
+          <div class="audio-hint">
+            📋 <strong>Jak to działa:</strong> Naciśnij "Odtwórz" – Leoś przeczyta tekst po polsku.
+            Weź kartkę i długopis, zapisz co słyszysz, a potem sprawdź!
+          </div>
+          <div class="audio-controls">
+            <button class="btn btn-audio" id="btn-play-audio" onclick="App.toggleAudio()">▶ Odtwórz</button>
+            <select class="speed-select" id="audio-speed">
+              <option value="0.7">🐢 Wolno</option>
+              <option value="1" selected>🚶 Normalnie</option>
+              <option value="1.3">🏃 Szybko</option>
+            </select>
+          </div>
+          <div class="dictation-text" id="audio-dict-text" style="filter:blur(6px);cursor:pointer"
+               onclick="App.toggleAudioText()" title="Kliknij aby pokazać/ukryć tekst">
+            ${d.speakText}
+          </div>
+          <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:.5rem">
+            👆 Kliknij na tekst, aby go pokazać lub ukryć
+          </p>
+          <div class="theory-tip" style="margin-top:.8rem">
+            <strong>💡 Wskazówka:</strong> ${d.hint}
+          </div>
+        </div>`;
+    }
+
+    this._audioTextVisible = false;
   },
 
-  _dictationOriginalVisible: true,
+  _audioTextVisible: false,
 
-  toggleOriginal() {
-    const el = document.getElementById('dictation-original');
+  toggleAudioText() {
+    const el = document.getElementById('audio-dict-text');
     if (!el) return;
-    this._dictationOriginalVisible = !this._dictationOriginalVisible;
-    el.style.opacity = this._dictationOriginalVisible ? '1' : '0';
-    el.style.filter = this._dictationOriginalVisible ? '' : 'blur(8px)';
+    this._audioTextVisible = !this._audioTextVisible;
+    el.style.filter = this._audioTextVisible ? '' : 'blur(6px)';
   },
 
-  checkDictation() {
-    const rule = RULES[State.currentRuleIdx];
-    const original = rule.dictation.text;
-    const input = document.getElementById('dictation-input').value.trim();
-    const result = document.getElementById('dictation-result');
+  toggleAudio() {
+    const btn   = document.getElementById('btn-play-audio');
+    const speed = parseFloat(document.getElementById('audio-speed')?.value || '1');
+    const rule  = RULES[State.currentRuleIdx];
 
-    if (!input) { alert('Wpisz tekst dyktanda!'); return; }
+    if (TTS.isSpeaking()) {
+      TTS.stop();
+      btn.textContent = '▶ Odtwórz';
+      btn.classList.remove('playing');
+      return;
+    }
 
-    const origWords = original.split(/\s+/);
-    const inWords  = input.split(/\s+/);
-    let correct = 0;
-    let html = '';
+    btn.textContent = '⏹ Zatrzymaj';
+    btn.classList.add('playing');
+    leosTalk(rule.dictation.speakText.length * 60);
 
-    origWords.forEach((word, i) => {
-      const userWord = (inWords[i] || '').replace(/[.,!?;:]/g, '').toLowerCase();
-      const origClean = word.replace(/[.,!?;:]/g, '').toLowerCase();
-      if (userWord === origClean) {
+    const utt = TTS.speak(rule.dictation.speakText, speed);
+    if (utt) {
+      utt.onend = () => {
+        btn.textContent = '▶ Odtwórz';
+        btn.classList.remove('playing');
+      };
+    } else {
+      btn.textContent = '▶ Odtwórz';
+      btn.classList.remove('playing');
+      alert('Twoja przeglądarka nie obsługuje mowy. Spróbuj Chrome lub Edge.');
+    }
+  },
+
+  // Click-dictation token logic
+  toggleToken(el, idx) {
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.dict-choice-token.open').forEach(t => t.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  },
+
+  selectToken(idx, value, tokenEl) {
+    _clickParts[idx].selected = value;
+    tokenEl.classList.remove('open');
+    const label = tokenEl.querySelector('.token-label');
+    if (label) {
+      label.textContent = value;
+      label.style.color = '#1e293b';
+    }
+    tokenEl.style.background = '#ddd6fe';
+    tokenEl.style.borderColor = '#7c3aed';
+    tokenEl.style.color = '#4c1d95';
+  },
+
+  checkClickDictation() {
+    let total = 0, correct = 0;
+    document.querySelectorAll('.dict-choice-token').forEach(el => {
+      const idx  = parseInt(el.dataset.idx);
+      const part = _clickParts[idx];
+      if (!part || part.type !== 'choice') return;
+      total++;
+      const selected = part.selected;
+      if (selected === part.answer) {
         correct++;
-        html += `<span class="ok">${word} </span>`;
+        el.classList.add('selected-correct', 'checked-reveal');
+        el.style.background = '#dcfce7';
+        el.style.borderColor = 'var(--green)';
+        el.style.color = 'var(--green-dark)';
+        el.querySelector('.token-label').textContent = part.answer;
       } else {
-        html += `<span class="err" title="Powinno być: ${word}">${inWords[i] || '___'} </span>`;
+        el.classList.add('selected-wrong', 'checked-reveal');
+        el.style.background = 'var(--red-pale)';
+        el.style.borderColor = 'var(--red)';
+        el.style.color = 'var(--red)';
+        el.querySelector('.token-label').textContent = (selected || '?') + ' → ' + part.answer;
       }
     });
 
-    const pct = correct / origWords.length;
+    const pct = total ? correct / total : 0;
     const pts = Math.round(pct * 20);
     addScore(pts);
+    leosTalk(1800);
 
-    result.style.display = 'block';
-    result.innerHTML = `
-      <strong>Wynik: ${correct}/${origWords.length} słów poprawnie (${Math.round(pct*100)}%) +${pts} pkt</strong><br><br>
-      <em>Twój tekst z zaznaczonymi błędami:</em><br>
-      ${html}<br><br>
-      <em>Poprawny tekst:</em><br>
-      ${original}`;
-
-    // show original
-    const orig = document.getElementById('dictation-original');
-    if (orig) { orig.style.opacity = '1'; orig.style.filter = ''; }
-    this._dictationOriginalVisible = true;
+    const res = document.getElementById('click-dict-result');
+    if (res) {
+      res.style.display = 'block';
+      res.innerHTML = `<strong>✓ ${correct} z ${total} poprawnie (${Math.round(pct*100)}%) — +${pts} pkt</strong>`;
+    }
   },
 
-  resetDictation() {
-    const input = document.getElementById('dictation-input');
-    if (input) input.value = '';
-    const result = document.getElementById('dictation-result');
-    if (result) result.style.display = 'none';
-  }
+  resetClickDictation() {
+    const rule = RULES[State.currentRuleIdx];
+    renderClickDictation(rule);
+  },
+
+  switchDictTab(name) {
+    document.querySelectorAll('.dict-subtab').forEach(t => t.classList.toggle('active', t.dataset.dict === name));
+    document.querySelectorAll('.dict-panel').forEach(p => p.classList.toggle('active', p.id === 'dict-panel-' + name));
+  },
 };
+
+// Close token dropdowns on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.dict-choice-token')) {
+    document.querySelectorAll('.dict-choice-token.open').forEach(t => t.classList.remove('open'));
+  }
+});
 
 // ============================================================
 //  INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
   updateScoreDisplay();
+  // Preload voices for TTS
+  if (window.speechSynthesis) {
+    speechSynthesis.getVoices();
+    speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+  }
 });

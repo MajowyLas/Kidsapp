@@ -181,11 +181,7 @@
               <div class="troll-cheek"></div>
             </div>
           </div>
-          <div class="troll-body">
-            <div class="troll-belly">
-              <span class="troll-star">&#10022;</span>
-            </div>
-          </div>
+          <div class="troll-body"></div>
           <div class="troll-legs">
             <div class="troll-leg"></div>
             <div class="troll-leg"></div>
@@ -193,7 +189,36 @@
         </div>
         <div class="speech-bubble dictation-bubble" id="dictation-intro"></div>
       </div>
-      <div id="dictation-area"></div>
+
+      <!-- Sub-tabs -->
+      <div class="dict-subtabs">
+        <button class="dict-subtab active" data-dict="click" onclick="App.switchDictTab('click')">
+          🖱️ Kliknij i wybierz
+        </button>
+        <button class="dict-subtab" data-dict="audio" onclick="App.switchDictTab('audio')">
+          🔊 Posłuchaj i pisz
+        </button>
+      </div>
+
+      <!-- Panel 1: click-to-choose -->
+      <div class="dict-panel active" id="dict-panel-click">
+        <div class="dictation-card">
+          <p style="font-size:.95rem;color:var(--text-muted);margin-bottom:1rem">
+            Kliknij na <strong style="color:#5b21b6">fioletowe słowo</strong> i wybierz właściwą pisownię, potem naciśnij "Sprawdź"!
+          </p>
+          <div id="click-dict-area"></div>
+          <div id="click-dict-result" class="dictation-result" style="display:none"></div>
+          <div class="dictation-actions">
+            <button class="btn btn-green" onclick="App.checkClickDictation()">Sprawdź ✓</button>
+            <button class="btn btn-outline" onclick="App.resetClickDictation()">Wyczyść</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2: audio / paper -->
+      <div class="dict-panel" id="dict-panel-audio">
+        <div id="audio-dict-area"></div>
+      </div>
     </div>
   </div>
 </div>
