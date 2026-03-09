@@ -72,43 +72,7 @@ html, body {
 }
 .app-title span { color: var(--yellow); font-size: 3.2rem; display: block; }
 
-/* ===== LEOŚ – FLUFFY BALL ===== */
-.troll-character {
-  position: relative; display: flex; flex-direction: column; align-items: center;
-  animation: leo-float 3s ease-in-out infinite;
-}
-.troll-character.bounce { animation: leo-bounce 0.5s ease-in-out infinite; }
-
-@keyframes leo-float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%       { transform: translateY(-12px) rotate(1.5deg); }
-}
-@keyframes leo-bounce {
-  0%, 100% { transform: translateY(0) rotate(-3deg) scale(1); }
-  50%       { transform: translateY(-14px) rotate(3deg) scale(1.05); }
-}
-
-/* Waving arm (right side) */
-.troll-character::before {
-  content: '';
-  position: absolute;
-  width: calc(16px * var(--sz, 1));
-  height: calc(38px * var(--sz, 1));
-  background: radial-gradient(ellipse at 40% 20%, #6dc840, #2d6a1f);
-  border-radius: 50%;
-  right: calc(-4px * var(--sz, 1));
-  top:   calc(28px * var(--sz, 1));
-  transform-origin: top center;
-  animation: wave-arm 1.8s ease-in-out infinite;
-  z-index: 0;
-  filter: drop-shadow(2px 2px 3px rgba(0,0,0,.2));
-}
-@keyframes wave-arm {
-  0%   { transform: rotate(-15deg); }
-  35%  { transform: rotate(28deg); }
-  65%  { transform: rotate(-5deg); }
-  100% { transform: rotate(-15deg); }
-}
+/* ===== LEOŚ – TROLL CHARACTER ===== */
 
 /* Sizes */
 .troll-big .troll-character  { --sz: 1.6; }
@@ -116,156 +80,279 @@ html, body {
 .troll-character.small        { --sz: 0.55; }
 .troll-character               { --sz: 1; }
 
-/* Hide old parts */
-.troll-hair   { display: none; }
-.troll-body   { display: none; }
-.troll-nose   { display: none; }
-.troll-cheeks { display: none; }
+/* Main container */
+.troll-character {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  animation: leo-float 3s ease-in-out infinite;
+  width: calc(110px * var(--sz, 1));
+}
+.troll-character.bounce { animation: leo-bounce 0.55s ease-in-out infinite; }
+.troll-character::before { display: none; } /* remove old pseudo-arm */
 
-/* ── THE FLUFFY BALL ── */
+@keyframes leo-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes leo-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-13px) scale(1.05); }
+}
+
+/* ── HAIR ── */
+.troll-hair {
+  display: block;
+  width: calc(74px * var(--sz, 1));
+  height: calc(26px * var(--sz, 1));
+  background: #4caf50;
+  margin-bottom: calc(-5px * var(--sz, 1));
+  position: relative; z-index: 5;
+  clip-path: polygon(
+    0% 100%, 0% 55%, 9% 85%, 17% 15%, 27% 72%, 37% 5%,
+    48% 68%, 58% 8%, 68% 65%, 78% 22%, 90% 78%, 100% 50%, 100% 100%
+  );
+  filter: drop-shadow(0 -1px 2px rgba(0,0,0,.18));
+}
+
+/* ── HEAD ── */
 .troll-head {
-  width:  calc(120px * var(--sz, 1));
-  height: calc(120px * var(--sz, 1));
-  background:
-    radial-gradient(circle at 38% 30%,
-      #c5ec68 0%, #7dd43c 22%, #4caf50 50%, #2d7a1f 80%, #1a5214 100%);
-  border-radius: 50%;
+  width:  calc(105px * var(--sz, 1));
+  height: calc(98px * var(--sz, 1));
+  background: radial-gradient(ellipse at 35% 28%, #c5f08a, #7dd43c 55%, #5db830 85%);
+  border-radius: 50% 50% 46% 46%;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  position: relative; z-index: 1;
+  position: relative; z-index: 4;
   box-shadow:
-    inset -10px -14px 28px rgba(0,0,0,.30),
-    inset  5px   5px 14px rgba(255,255,255,.13),
-    0 8px 24px rgba(0,0,0,.25);
-  gap: calc(4px * var(--sz, 1));
+    inset -7px -10px 22px rgba(0,0,0,.18),
+    inset  4px  4px 12px rgba(255,255,255,.14),
+    0 6px 18px rgba(0,0,0,.2);
+  gap: calc(3px * var(--sz, 1));
   overflow: visible;
 }
 
-/* Fuzzy glow ring */
+/* Left ear */
 .troll-head::before {
-  content: ''; position: absolute;
-  width: 132%; height: 132%; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle at 38% 30%,
-    transparent 40%, rgba(105,190,50,.72) 51%, rgba(55,140,20,.45) 67%, transparent 80%);
-  border-radius: 50%; z-index: -1;
-  filter: blur(calc(5px * var(--sz,1)));
-}
-
-/* Fur spike ring */
-.troll-head::after {
-  content: ''; position: absolute;
-  width: 150%; height: 150%; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  background: conic-gradient(
-    #5db830 0deg,transparent 5deg, #5db830 10deg,transparent 15deg,
-    #5db830 20deg,transparent 25deg, #5db830 30deg,transparent 35deg,
-    #5db830 40deg,transparent 45deg, #5db830 50deg,transparent 55deg,
-    #5db830 60deg,transparent 65deg, #5db830 70deg,transparent 75deg,
-    #5db830 80deg,transparent 85deg, #5db830 90deg,transparent 95deg,
-    #5db830 100deg,transparent 105deg, #5db830 110deg,transparent 115deg,
-    #5db830 120deg,transparent 125deg, #5db830 130deg,transparent 135deg,
-    #5db830 140deg,transparent 145deg, #5db830 150deg,transparent 155deg,
-    #5db830 160deg,transparent 165deg, #5db830 170deg,transparent 175deg,
-    #5db830 180deg,transparent 185deg, #5db830 190deg,transparent 195deg,
-    #5db830 200deg,transparent 205deg, #5db830 210deg,transparent 215deg,
-    #5db830 220deg,transparent 225deg, #5db830 230deg,transparent 235deg,
-    #5db830 240deg,transparent 245deg, #5db830 250deg,transparent 255deg,
-    #5db830 260deg,transparent 265deg, #5db830 270deg,transparent 275deg,
-    #5db830 280deg,transparent 285deg, #5db830 290deg,transparent 295deg,
-    #5db830 300deg,transparent 305deg, #5db830 310deg,transparent 315deg,
-    #5db830 320deg,transparent 325deg, #5db830 330deg,transparent 335deg,
-    #5db830 340deg,transparent 345deg, #5db830 350deg,transparent 355deg,
-    #5db830 360deg
-  );
+  content: '';
+  position: absolute;
+  width:  calc(26px * var(--sz, 1));
+  height: calc(22px * var(--sz, 1));
+  background: radial-gradient(ellipse at 60% 38%, #c5f08a, #7dd43c 70%);
   border-radius: 50%;
-  -webkit-mask: radial-gradient(circle at center, transparent 45%, black 47%, black 68%, transparent 70%);
-  mask:          radial-gradient(circle at center, transparent 45%, black 47%, black 68%, transparent 70%);
-  z-index: -1;
-  filter: blur(calc(1.5px * var(--sz,1)));
+  left: calc(-11px * var(--sz, 1));
+  top: 38%;
+  box-shadow: inset -2px -2px 5px rgba(0,0,0,.2);
+}
+/* Right ear */
+.troll-head::after {
+  content: '';
+  position: absolute;
+  width:  calc(26px * var(--sz, 1));
+  height: calc(22px * var(--sz, 1));
+  background: radial-gradient(ellipse at 40% 38%, #c5f08a, #7dd43c 70%);
+  border-radius: 50%;
+  right: calc(-11px * var(--sz, 1));
+  top: 38%;
+  box-shadow: inset 2px -2px 5px rgba(0,0,0,.2);
 }
 
 /* ── EYES ── */
 .troll-eyes {
-  display: flex; gap: calc(8px * var(--sz,1));
-  margin-top: calc(6px * var(--sz,1));
+  display: flex; gap: calc(12px * var(--sz, 1));
+  margin-top: calc(5px * var(--sz, 1));
 }
 .troll-eye {
-  width:  calc(34px * var(--sz,1));
-  height: calc(38px * var(--sz,1));
-  background: radial-gradient(circle at 42% 38%, #fff, #eee 60%, #e0e0e0);
+  width:  calc(30px * var(--sz, 1));
+  height: calc(30px * var(--sz, 1));
+  background: radial-gradient(circle at 38% 33%, #3a3a3a, #111 65%);
   border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 3px 8px rgba(0,0,0,.35), inset 0 -2px 5px rgba(0,0,0,.1);
-  transition: transform .3s ease;
+  position: relative;
+  box-shadow: 0 2px 7px rgba(0,0,0,.45), inset 0 1px 4px rgba(255,255,255,.06);
+  overflow: hidden;
 }
-.troll-eye:first-child { transform: rotate(-4deg); }
-.troll-eye:last-child  { transform: rotate(4deg); }
+/* White reflection */
+.troll-eye::before {
+  content: '';
+  position: absolute;
+  top: 12%; left: 16%;
+  width: 36%; height: 36%;
+  background: rgba(255,255,255,.92);
+  border-radius: 50%;
+}
+/* Small secondary reflection */
+.troll-eye::after {
+  content: '';
+  position: absolute;
+  bottom: 22%; right: 18%;
+  width: 16%; height: 16%;
+  background: rgba(255,255,255,.5);
+  border-radius: 50%;
+}
 
 /* Blinking */
 .troll-character:not(.is-talking) .troll-eye {
   animation: blink 5s ease-in-out infinite;
 }
 @keyframes blink {
-  0%, 94%, 100% { transform: scaleY(1); }
-  96%            { transform: scaleY(0.1); }
+  0%, 92%, 100% { transform: scaleY(1); }
+  95%            { transform: scaleY(0.06); }
 }
 .troll-eye:first-child { animation-delay: 0s; }
-.troll-eye:last-child  { animation-delay: .05s; }
+.troll-eye:last-child  { animation-delay: .06s; }
 
-.troll-pupil {
-  width:  calc(17px * var(--sz,1));
-  height: calc(19px * var(--sz,1));
-  background: radial-gradient(circle at 40% 35%, #2a2a2a, #111);
-  border-radius: 50%; position: relative;
-  box-shadow: 0 0 0 calc(3.5px * var(--sz,1)) #4caf50,
-              0 0 0 calc(4.5px * var(--sz,1)) #2e7d32;
+.troll-pupil { display: none; } /* eye IS the pupil now */
+
+/* Talking eyes */
+.is-talking .troll-eye {
+  animation: none !important;
+  transform: scaleY(.85);
 }
-.troll-pupil::after {
-  content: ''; position: absolute; top: 10%; right: 10%;
-  width: 35%; height: 35%;
-  background: rgba(255,255,255,.9); border-radius: 50%;
+
+/* ── NOSE ── */
+.troll-nose {
+  display: block;
+  width:  calc(22px * var(--sz, 1));
+  height: calc(14px * var(--sz, 1));
+  background: radial-gradient(ellipse at 42% 35%, #a3e870, #5db830 80%);
+  border-radius: 50% 50% 46% 46%;
+  box-shadow: inset -1px -2px 5px rgba(0,0,0,.2), 0 1px 3px rgba(0,0,0,.15);
 }
 
 /* ── MOUTH ── */
 .troll-mouth {
-  width:  calc(28px * var(--sz,1));
-  height: calc(13px * var(--sz,1));
-  border: calc(2.5px * var(--sz,1)) solid rgba(0,70,0,.5);
+  width:  calc(32px * var(--sz, 1));
+  height: calc(14px * var(--sz, 1));
+  border: calc(2.5px * var(--sz, 1)) solid rgba(0,60,0,.45);
   border-top: none;
-  border-radius: 0 0 calc(14px * var(--sz,1)) calc(14px * var(--sz,1));
+  border-radius: 0 0 calc(16px * var(--sz, 1)) calc(16px * var(--sz, 1));
   background: transparent;
-  margin-bottom: calc(7px * var(--sz,1));
-  transition: height .1s ease, background .1s ease, border-radius .1s ease;
+  margin-bottom: calc(8px * var(--sz, 1));
+  transition: height .1s ease, border-radius .1s ease;
 }
 .troll-mouth::before { display: none; }
 
-/* Talking animation */
+/* Talking mouth */
 .is-talking .troll-mouth {
-  animation: mouth-talk .28s ease-in-out infinite alternate;
-  background: rgba(200,50,50,.25);
+  animation: mouth-talk .26s ease-in-out infinite alternate;
+  background: rgba(180,40,40,.2);
 }
 @keyframes mouth-talk {
-  from { height: calc(4px  * var(--sz,1)); border-radius: 0 0 calc(6px * var(--sz,1)) calc(6px * var(--sz,1)); }
-  to   { height: calc(20px * var(--sz,1)); border-radius: 0 0 calc(14px * var(--sz,1)) calc(14px * var(--sz,1)); }
-}
-.is-talking .troll-eye {
-  animation: none;
-  transform: rotate(0deg) scaleY(.85);
+  from { height: calc(5px * var(--sz,1)); border-radius: 0 0 calc(7px * var(--sz,1)) calc(7px * var(--sz,1)); }
+  to   { height: calc(20px * var(--sz,1)); border-radius: 0 0 calc(16px * var(--sz,1)) calc(16px * var(--sz,1)); }
 }
 
-/* ── FEET ── */
+/* ── CHEEKS ── */
+.troll-cheeks {
+  position: absolute;
+  bottom: calc(18px * var(--sz, 1));
+  left: 0; right: 0;
+  display: flex; justify-content: space-between;
+  padding: 0 calc(10px * var(--sz, 1));
+  pointer-events: none;
+}
+.troll-cheek {
+  width:  calc(14px * var(--sz, 1));
+  height: calc(9px * var(--sz, 1));
+  background: rgba(255,120,120,.22);
+  border-radius: 50%;
+}
+
+/* ── BODY (overalls) ── */
+.troll-body {
+  width: calc(82px * var(--sz, 1));
+  min-height: calc(62px * var(--sz, 1));
+  background: #7B4F2E;   /* brown overalls */
+  border-radius: calc(12px * var(--sz,1)) calc(12px * var(--sz,1))
+                 calc(16px * var(--sz,1)) calc(16px * var(--sz,1));
+  margin-top: calc(-5px * var(--sz, 1));
+  position: relative; z-index: 3;
+  box-shadow: inset -4px -7px 16px rgba(0,0,0,.22), 0 4px 12px rgba(0,0,0,.18);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: flex-start;
+  padding-top: calc(10px * var(--sz, 1));
+  overflow: visible;
+}
+/* Green body peeking out behind overalls */
+.troll-body::before {
+  content: '';
+  position: absolute;
+  width: 115%; height: 65%;
+  background: radial-gradient(ellipse at 50% 30%, #9ae350, #5db830);
+  border-radius: 50% 50% 30% 30%;
+  top: 0; left: -7.5%;
+  z-index: -1;
+}
+/* Overalls strap bar at collar */
+.troll-body::after {
+  content: '';
+  position: absolute;
+  top: calc(-7px * var(--sz, 1));
+  left: 50%; transform: translateX(-50%);
+  width: calc(44px * var(--sz, 1));
+  height: calc(8px * var(--sz, 1));
+  background: #7B4F2E;
+  border-radius: calc(4px * var(--sz, 1));
+}
+
+/* ── ARMS ── */
+.troll-arms {
+  position: absolute;
+  top: calc(2px * var(--sz, 1));
+  left: 0; width: 100%;
+  pointer-events: none; z-index: 5;
+}
+.troll-arm {
+  position: absolute;
+  width:  calc(20px * var(--sz, 1));
+  height: calc(54px * var(--sz, 1));
+  background: radial-gradient(ellipse at 40% 18%, #a8e860, #5db830 75%);
+  border-radius: calc(10px * var(--sz, 1));
+  box-shadow: inset -2px -4px 7px rgba(0,0,0,.25);
+}
+.troll-arm.left {
+  left: calc(-17px * var(--sz, 1));
+  top: 0;
+  transform-origin: top center;
+  transform: rotate(12deg);
+}
+.troll-arm.right {
+  right: calc(-17px * var(--sz, 1));
+  top: 0;
+  transform-origin: top center;
+  animation: wave-arm 1.9s ease-in-out infinite;
+}
+@keyframes wave-arm {
+  0%   { transform: rotate(-18deg); }
+  30%  { transform: rotate(28deg); }
+  60%  { transform: rotate(-8deg); }
+  100% { transform: rotate(-18deg); }
+}
+/* Hide arms on small troll (too tiny) */
+.troll-character.small .troll-arms { display: none; }
+
+/* ── BELLY / POCKET ── */
+.troll-belly {
+  width:  calc(32px * var(--sz, 1));
+  height: calc(26px * var(--sz, 1));
+  background: rgba(0,0,0,.14);
+  border: calc(1.5px * var(--sz, 1)) solid rgba(0,0,0,.12);
+  border-radius: calc(6px * var(--sz, 1));
+  display: flex; align-items: center; justify-content: center;
+}
+.troll-star { font-size: calc(12px * var(--sz, 1)); color: rgba(255,220,50,.7); }
+
+/* ── LEGS / FEET ── */
 .troll-legs {
-  display: flex; gap: calc(12px * var(--sz,1));
-  margin-top: calc(-2px * var(--sz,1));
+  display: flex; gap: calc(10px * var(--sz, 1));
+  margin-top: calc(-2px * var(--sz, 1));
   position: relative; z-index: 2;
 }
 .troll-leg {
-  width:  calc(26px * var(--sz,1));
-  height: calc(18px * var(--sz,1));
-  background: radial-gradient(circle at 40% 30%, #5db830, #2d6a1f);
-  border-radius: calc(6px * var(--sz,1)) calc(6px * var(--sz,1))
-                 calc(14px * var(--sz,1)) calc(14px * var(--sz,1));
-  box-shadow: inset -2px -3px 5px rgba(0,0,0,.3);
+  width:  calc(30px * var(--sz, 1));
+  height: calc(20px * var(--sz, 1));
+  background: radial-gradient(ellipse at 40% 25%, #a8e860, #5db830 80%);
+  border-radius: calc(6px * var(--sz, 1)) calc(6px * var(--sz, 1))
+                 calc(15px * var(--sz, 1)) calc(15px * var(--sz, 1));
+  box-shadow: inset -2px -3px 6px rgba(0,0,0,.25);
 }
 
 /* ===== SPEECH BUBBLE ===== */
@@ -359,8 +446,6 @@ html, body {
 .troll-small { cursor: pointer; transition: transform .2s; }
 .troll-small:hover { transform: scale(1.15); }
 .troll-small .troll-character { --sz: 0.55; animation: leo-float 2s ease-in-out infinite; }
-/* No waving arm on small header troll */
-.troll-small .troll-character::before { display: none; }
 
 .score-badge {
   background: var(--yellow); color: #78350f;

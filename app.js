@@ -76,9 +76,9 @@ const RULES = [
       }
     ],
     dictation: {
-      clickText: 'W{ó|u}z jedzie d{u|ó}żą drogą przez las. Na dr{ó|u}żce siedzi s{o|ó}wa. Mama w{o|ó}ła c{ó|u}rkę do dom{u|ó}. K{u|ó}bek stoi na stole.',
-      speakText: 'Wóz jedzie dużą drogą przez las. Na dróżce siedzi sowa. Mama woła córkę do domu. Kubek stoi na stole.',
-      hint: 'Zwróć uwagę na: wóz, dużą, dróżce, sowa, woła, córkę, domu, kubek'
+      clickText: 'W{ó|u}z jedzie d{u|ó}żą drogą przez las. Na dr{ó|u}żce siedzi s{o|ó}wa. Mama w{o|ó}ła c{ó|u}rkę do dom{u|ó}. K{u|ó}bek stoi na stole. S{ó|u}l jest w szafce kuchennej. P{ó|u}źno wracamy z g{ó|u}ry. {U|Ó}lica jest długa i szeroka. M{ó|u}j brat wr{ó|u}cił z podr{ó|u}ży. Babcia ugotowała ros{ó|u}ł z warzywami. B{u|ó}rek to pies z naszego podw{ó|u}rka.',
+      speakText: 'Wóz jedzie dużą drogą przez las. Na dróżce siedzi sowa. Mama woła córkę do domu. Kubek stoi na stole. Sól jest w szafce kuchennej. Późno wracamy z góry. Ulica jest długa i szeroka. Mój brat wrócił z podróży. Babcia ugotowała rosół z warzywami. Burek to pies z naszego podwórka.',
+      hint: 'Zwróć uwagę na: wóz, dużą, dróżce, sowa, woła, córkę, domu, kubek, sól, późno, góry, ulica, mój, wrócił, podróży, rosół, burek, podwórka'
     }
   },
 
@@ -148,9 +148,9 @@ const RULES = [
       }
     ],
     dictation: {
-      clickText: 'T{rz|ż}y {ż|rz}aby siedziały p{rz|ż}y b{rz|ż}egu {rz|ż}eki. D{rz|ż}ewo {rz|ż}ucało cień na trawę. G{rz|ż}yb wyrósł pod k{rz|ż}ewem.',
-      speakText: 'Trzy żaby siedziały przy brzegu rzeki. Drzewo rzucało cień na trawę. Grzyb wyrósł pod krzewem.',
-      hint: 'Zwróć uwagę na: trzy, żaby, przy, brzegu, rzeki, drzewo, grzyb, krzewem'
+      clickText: 'T{rz|ż}y {ż|rz}aby siedziały p{rz|ż}y b{rz|ż}egu {rz|ż}eki. D{rz|ż}ewo {rz|ż}ucało cień na trawę. G{rz|ż}yb wyrósł pod k{rz|ż}ewem. {Ż|Rz}ółta b{rz|ż}oza rośnie p{rz|ż}y drodze. Tata wziął nó{ż|rz} ze stołu. P{rz|ż}ed domem stał piękny {ż|rz}ółw. Kot je{ż|rz}y się na widok psa. Wró{ż|rz}ka mieszka w lesie. Bu{rz|ż}a nadchodzi zza chmur. Ka{ż|rz}dy uczeń umie to napisać.',
+      speakText: 'Trzy żaby siedziały przy brzegu rzeki. Drzewo rzucało cień na trawę. Grzyb wyrósł pod krzewem. Żółta brzoza rośnie przy drodze. Tata wziął nóż ze stołu. Przed domem stał piękny żółw. Kot jeży się na widok psa. Wróżka mieszka w lesie. Burza nadchodzi zza chmur. Każdy uczeń umie to napisać.',
+      hint: 'Zwróć uwagę na: trzy, żaby, przy, brzegu, rzeki, drzewo, grzyb, krzewem, żółta, brzoza, nóż, przed, żółw, jeży, wróżka, burza, każdy'
     }
   },
 
@@ -218,9 +218,9 @@ const RULES = [
       }
     ],
     dictation: {
-      clickText: '{Ch|H}łopiec pił {h|ch}erbatę z cukrem. Mu{ch|h}a siedziała na {ch|h}lebie. {H|Ch}istoria o trollu była ciekawa. Śmie{ch|h} to zdrowie!',
-      speakText: 'Chłopiec pił herbatę z cukrem. Mucha siedziała na chlebie. Historia o trollu była ciekawa. Śmiech to zdrowie!',
-      hint: 'Zwróć uwagę na: chłopiec, herbatę, mucha, chlebie, historia, śmiech'
+      clickText: '{Ch|H}łopiec pił {h|ch}erbatę z cukrem. Mu{ch|h}a siedziała na {ch|h}lebie. {H|Ch}istoria o trollu była ciekawa. Śmie{ch|h} to zdrowie! Mama gotuje w ci{ch|h}ej ku{ch|h}ni. {H|Ch}umor jest ważny każdego dnia. Na łące bzykała mu{ch|h}a. Dziecko słu{ch|h}a pięknej muzyki. {Ch|H}ata stała przy lesie. {H|Ch}ałas był słyszalny z daleka.',
+      speakText: 'Chłopiec pił herbatę z cukrem. Mucha siedziała na chlebie. Historia o trollu była ciekawa. Śmiech to zdrowie! Mama gotuje w cichej kuchni. Humor jest ważny każdego dnia. Na łące bzykała mucha. Dziecko słucha pięknej muzyki. Chata stała przy lesie. Hałas był słyszalny z daleka.',
+      hint: 'Zwróć uwagę na: chłopiec, herbatę, mucha, chlebie, historia, śmiech, cichej, kuchni, humor, mucha, słucha, chata, hałas'
     }
   },
 
@@ -287,9 +287,9 @@ const RULES = [
       }
     ],
     dictation: {
-      clickText: 'Dzieci biegaj{ą|ę} i śpiewaj{ą|ę} w ogrodzie. Ja widz{ę|ą} pi{ę|ą}kne kwiaty. D{ą|ę}b rośnie przy rzece. R{ę|ą}ka Kasi jest ciepła.',
-      speakText: 'Dzieci biegają i śpiewają w ogrodzie. Ja widzę piękne kwiaty. Dąb rośnie przy rzece. Ręka Kasi jest ciepła.',
-      hint: 'Zwróć uwagę na: biegają, śpiewają, widzę, piękne, dąb, ręka'
+      clickText: 'Dzieci biegaj{ą|ę} i śpiewaj{ą|ę} w ogrodzie. Ja widz{ę|ą} pi{ę|ą}kne kwiaty. D{ą|ę}b rośnie przy rzece. R{ę|ą}ka Kasi jest ciepła. Ptaki śpiewaj{ą|ę} na drzewie. Pisz{ę|ą} list do babci. W{ą|ę}ski chodnik biegnie przez park. Cz{ę|ą}ść zad{ą|ę}ń jest łatwa. Oni rob{ą|ę} lekcje po południu. Nie widz{ę|ą} nic przez okno.',
+      speakText: 'Dzieci biegają i śpiewają w ogrodzie. Ja widzę piękne kwiaty. Dąb rośnie przy rzece. Ręka Kasi jest ciepła. Ptaki śpiewają na drzewie. Piszę list do babci. Wąski chodnik biegnie przez park. Część zadań jest łatwa. Oni robią lekcje po południu. Nie widzę nic przez okno.',
+      hint: 'Zwróć uwagę na: biegają, śpiewają, widzę, piękne, dąb, ręka, śpiewają, piszę, wąski, część, zadań, robią, widzę'
     }
   },
 
@@ -356,9 +356,9 @@ const RULES = [
       }
     ],
     dictation: {
-      clickText: '{Nieduży|Nie duży} pies {nie lubi|nielubi} kąpieli. Tomek {nie ma|niema} dziś {niezbyt|nie zbyt} dobrego humoru. {Nieładna|Nie ładna} pogoda {nie sprzyja|niesprzyja} spacerowi. To prawdziwe {nieszczęście|nie szczęście}!',
-      speakText: 'Nieduży pies nie lubi kąpieli. Tomek nie ma dziś niezbyt dobrego humoru. Nieładna pogoda nie sprzyja spacerowi. To prawdziwe nieszczęście!',
-      hint: 'Zwróć uwagę na: nieduży, nie lubi, nie ma, niezbyt, nieładna, nie sprzyja, nieszczęście'
+      clickText: '{Nieduży|Nie duży} pies {nie lubi|nielubi} kąpieli. Tomek {nie ma|niema} dziś {niezbyt|nie zbyt} dobrego humoru. {Nieładna|Nie ładna} pogoda {nie sprzyja|niesprzyja} spacerowi. To prawdziwe {nieszczęście|nie szczęście}! Mama {nie je|nieje} słodyczy. {Niegrzeczny|Nie grzeczny} chłopiec {nie dostanie|niedostanie} nagrody. Kot {nie pije|niepije} wody z miski. {Niedaleko|Nie daleko} mieszka miła pani. Pies {nie biega|niebiega}, bo jest chory. {Niewesoły|Nie wesoły} chłopiec siedzi w kącie.',
+      speakText: 'Nieduży pies nie lubi kąpieli. Tomek nie ma dziś niezbyt dobrego humoru. Nieładna pogoda nie sprzyja spacerowi. To prawdziwe nieszczęście! Mama nie je słodyczy. Niegrzeczny chłopiec nie dostanie nagrody. Kot nie pije wody z miski. Niedaleko mieszka miła pani. Pies nie biega, bo jest chory. Niewesoły chłopiec siedzi w kącie.',
+      hint: 'Zwróć uwagę na: nieduży, nie lubi, nie ma, niezbyt, nieładna, nie sprzyja, nieszczęście, nie je, niegrzeczny, nie dostanie, nie pije, niedaleko, nie biega, niewesoły'
     }
   },
 
@@ -428,9 +428,9 @@ const RULES = [
       }
     ],
     dictation: {
-      clickText: '{K|k}asia i {T|t}omek mieszkają w {P|p}olsce. {W|w}isła płynie przez {W|w}arszawę. W {T|t}atrach mieszka dużo zwierząt. {L|l}eoś lubi podróżować po {E|e}uropie!',
-      speakText: 'Kasia i Tomek mieszkają w Polsce. Wisła płynie przez Warszawę. W Tatrach mieszka dużo zwierząt. Leoś lubi podróżować po Europie!',
-      hint: 'Wielkie litery: Kasia, Tomek, Polsce, Wisła, Warszawę, Tatrach, Leoś, Europie'
+      clickText: '{K|k}asia i {T|t}omek mieszkają w {P|p}olsce. {W|w}isła płynie przez {W|w}arszawę. W {T|t}atrach mieszka dużo zwierząt. {L|l}eoś lubi podróżować po {E|e}uropie! {M|m}arek {K|k}owalski pochodzi z {G|g}dańska. {B|b}ałtyk jest pięknym morzem. Rzeka {O|o}dra płynie na zachód. Moja siostra ma na imię {Z|z}ofia. {P|p}olska leży w {E|e}uropie. {B|b}oże {N|n}arodzenie to piękne święto.',
+      speakText: 'Kasia i Tomek mieszkają w Polsce. Wisła płynie przez Warszawę. W Tatrach mieszka dużo zwierząt. Leoś lubi podróżować po Europie! Marek Kowalski pochodzi z Gdańska. Bałtyk jest pięknym morzem. Rzeka Odra płynie na zachód. Moja siostra ma na imię Zofia. Polska leży w Europie. Boże Narodzenie to piękne święto.',
+      hint: 'Wielkie litery: Kasia, Tomek, Polsce, Wisła, Warszawę, Tatrach, Leoś, Europie, Marek, Kowalski, Gdańska, Bałtyk, Odra, Zofia, Polska, Boże Narodzenie'
     }
   }
 ];
@@ -502,24 +502,88 @@ function addScore(pts) {
 // ============================================================
 const TTS = {
   _utt: null,
-  speak(text, rate = 1) {
-    if (!window.speechSynthesis) return;
-    this.stop();
-    this._utt = new SpeechSynthesisUtterance(text);
-    this._utt.lang = 'pl-PL';
-    this._utt.rate = rate;
-    // try to pick a Polish voice
+  _pauseTimer: null,
+  _onEnd: null,
+  _running: false,
+
+  _pickVoice() {
     const voices = speechSynthesis.getVoices();
-    const plVoice = voices.find(v => v.lang.startsWith('pl'));
-    if (plVoice) this._utt.voice = plVoice;
-    speechSynthesis.speak(this._utt);
-    return this._utt;
+    const pl = voices.filter(v => v.lang.startsWith('pl'));
+    // prefer female-sounding voice by name patterns
+    const female = pl.find(v => {
+      const n = v.name.toLowerCase();
+      return n.includes('agnieszka') || n.includes('paulina') || n.includes('zosia') ||
+             n.includes('marta') || n.includes('zofia') || n.includes('female') ||
+             n.includes('kobieta') || n.includes('milena');
+    });
+    return female || pl[0] || null;
   },
+
+  speak(text, rate = 0.5, onEnd = null) {
+    if (!window.speechSynthesis) return null;
+    this.stop();
+    this._onEnd = onEnd;
+    this._running = true;
+
+    // Split into sentences (keep punctuation)
+    const sentences = text.match(/[^.!?]+[.!?]*/g)?.map(s => s.trim()).filter(Boolean) || [text];
+    let idx = 0;
+    const self = this;
+
+    const speakNext = () => {
+      if (idx >= sentences.length) {
+        self._running = false;
+        if (self._onEnd) self._onEnd();
+        return;
+      }
+      const utt = new SpeechSynthesisUtterance(sentences[idx]);
+      utt.lang = 'pl-PL';
+      utt.rate = rate;
+      utt.pitch = 1.15; // slightly higher = friendlier / more feminine
+      const v = self._pickVoice();
+      if (v) utt.voice = v;
+      self._utt = utt;
+      idx++;
+      utt.onend = () => {
+        if (idx < sentences.length) {
+          self._pauseTimer = setTimeout(speakNext, 10000); // 10-second pause
+        } else {
+          self._running = false;
+          if (self._onEnd) self._onEnd();
+        }
+      };
+      speechSynthesis.speak(utt);
+    };
+
+    speakNext();
+    return true;
+  },
+
+  // Short one-shot speak (for Leoś voice comments – no sentence splitting)
+  speakOnce(text, rate = 0.9, pitch = 1.4) {
+    if (!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'pl-PL';
+    utt.rate = rate;
+    utt.pitch = pitch;
+    const v = this._pickVoice();
+    if (v) utt.voice = v;
+    speechSynthesis.speak(utt);
+  },
+
   stop() {
     if (window.speechSynthesis) speechSynthesis.cancel();
+    if (this._pauseTimer) { clearTimeout(this._pauseTimer); this._pauseTimer = null; }
     this._utt = null;
+    this._running = false;
+    this._onEnd = null;
   },
-  isSpeaking() { return window.speechSynthesis && speechSynthesis.speaking; }
+  isSpeaking() {
+    return this._running ||
+           (window.speechSynthesis && speechSynthesis.speaking) ||
+           this._pauseTimer !== null;
+  }
 };
 
 // ============================================================
@@ -792,14 +856,36 @@ const App = {
     State.exerciseAnswers[State.currentExerciseIdx] = allOk;
   },
 
+  _leosComments: [
+    'Super! Wiedziałem, że dasz radę!',
+    'Brawo! Jesteś świetny!',
+    'Wow, to było idealne!',
+    'Tak trzymaj! Leoś jest z ciebie bardzo dumny!',
+    'Niesamowite! Masz talent do ortografii!',
+    'Doskonale! Tak właśnie się pisze!',
+    'Hurra! Kolejny punkt dla ciebie!',
+    'Znakomicie! Uczysz się szybko!',
+  ],
+  _lastLeosComment: -1,
+
   _showFeedback(correct, hint) {
     const fb = document.getElementById('exercise-feedback');
     fb.className = 'feedback ' + (correct ? 'correct-fb' : 'wrong-fb');
     if (correct) {
       const msgs = ['Super! 🎉', 'Brawo! 🌟', 'Znakomicie! ✨', 'Tak trzymaj! 👏', 'Leoś jest z ciebie dumny! 🌈', 'Niesamowite! 🏆'];
       fb.textContent = '✓ ' + msgs[Math.floor(Math.random() * msgs.length)];
-      leosTalk(1600);
+      leosTalk(1800);
+      // Leoś speaks every 3rd correct answer
+      this._correctStreak = (this._correctStreak || 0) + 1;
+      if (this._correctStreak % 3 === 0) {
+        let idx;
+        do { idx = Math.floor(Math.random() * this._leosComments.length); }
+        while (idx === this._lastLeosComment && this._leosComments.length > 1);
+        this._lastLeosComment = idx;
+        setTimeout(() => TTS.speakOnce(this._leosComments[idx], 0.85, 1.5), 400);
+      }
     } else {
+      this._correctStreak = 0;
       fb.innerHTML = '✗ Prawie! ' + (hint ? '<em>' + hint + '</em>' : 'Spróbuj jeszcze raz!');
     }
   },
@@ -872,9 +958,9 @@ const App = {
           <div class="audio-controls">
             <button class="btn btn-audio" id="btn-play-audio" onclick="App.toggleAudio()">▶ Odtwórz</button>
             <select class="speed-select" id="audio-speed">
-              <option value="0.7">🐢 Wolno</option>
-              <option value="1" selected>🚶 Normalnie</option>
-              <option value="1.3">🏃 Szybko</option>
+              <option value="0.35">🐢 Wolno</option>
+              <option value="0.5" selected>🚶 Normalnie</option>
+              <option value="0.7">🏃 Szybko</option>
             </select>
           </div>
           <div class="dictation-text" id="audio-dict-text" style="filter:blur(6px);cursor:pointer"
@@ -904,7 +990,7 @@ const App = {
 
   toggleAudio() {
     const btn   = document.getElementById('btn-play-audio');
-    const speed = parseFloat(document.getElementById('audio-speed')?.value || '1');
+    const speed = parseFloat(document.getElementById('audio-speed')?.value || '0.5');
     const rule  = RULES[State.currentRuleIdx];
 
     if (TTS.isSpeaking()) {
@@ -914,21 +1000,19 @@ const App = {
       return;
     }
 
+    if (!window.speechSynthesis) {
+      alert('Twoja przeglądarka nie obsługuje mowy. Spróbuj Chrome lub Edge.');
+      return;
+    }
+
     btn.textContent = '⏹ Zatrzymaj';
     btn.classList.add('playing');
-    leosTalk(rule.dictation.speakText.length * 60);
+    leosTalk(rule.dictation.speakText.length * 80);
 
-    const utt = TTS.speak(rule.dictation.speakText, speed);
-    if (utt) {
-      utt.onend = () => {
-        btn.textContent = '▶ Odtwórz';
-        btn.classList.remove('playing');
-      };
-    } else {
+    TTS.speak(rule.dictation.speakText, speed, () => {
       btn.textContent = '▶ Odtwórz';
       btn.classList.remove('playing');
-      alert('Twoja przeglądarka nie obsługuje mowy. Spróbuj Chrome lub Edge.');
-    }
+    });
   },
 
   // Click-dictation token logic
