@@ -86,6 +86,7 @@
       <span class="score-icon">&#10022;</span>
       <span id="total-score">0</span> pkt
     </div>
+    <button class="btn-quiet" onclick="App.toggleQuietMode()" title="Tryb cichy: wyłączony">🔊</button>
   </header>
 
   <div class="rules-grid" id="rules-grid">
@@ -102,6 +103,7 @@
       <span class="score-icon">&#10022;</span>
       <span id="rule-score">0</span> pkt
     </div>
+    <button class="btn-quiet" onclick="App.toggleQuietMode()" title="Tryb cichy: wyłączony">🔊</button>
   </header>
 
   <!-- Zakładki -->
@@ -217,8 +219,8 @@
       <!-- Panel 1: click-to-choose -->
       <div class="dict-panel active" id="dict-panel-click">
         <div class="dictation-card">
-          <p style="font-size:.95rem;color:var(--text-muted);margin-bottom:1rem">
-            Kliknij na <strong style="color:#5b21b6">fioletowe słowo</strong> i wybierz właściwą pisownię, potem naciśnij "Sprawdź"!
+          <p style="font-size:1rem;color:var(--text-muted);margin-bottom:1rem">
+            Kliknij na <strong style="color:#7a5500">żółte słowo</strong> i wybierz właściwą pisownię, potem naciśnij "Sprawdź"!
           </p>
           <div id="click-dict-area"></div>
           <div id="click-dict-result" class="dictation-result" style="display:none"></div>
@@ -280,6 +282,46 @@
         <button class="btn btn-outline" onclick="App.retryExercises()">Spróbuj ponownie</button>
         <button class="btn btn-green" onclick="App.showMenu()">Menu</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRZERWA (po 10 min aktywności) -->
+<div id="screen-break" class="screen">
+  <div class="break-container">
+    <div class="troll-character medium bounce">
+      <div class="troll-hair"></div>
+      <div class="troll-head">
+        <div class="troll-eyes">
+          <div class="troll-eye"><div class="troll-pupil"></div></div>
+          <div class="troll-eye"><div class="troll-pupil"></div></div>
+        </div>
+        <div class="troll-nose"></div>
+        <div class="troll-mouth"></div>
+        <div class="troll-cheeks">
+          <div class="troll-cheek"></div>
+          <div class="troll-cheek"></div>
+        </div>
+      </div>
+      <div class="troll-body">
+        <div class="troll-arms">
+          <div class="troll-arm left"></div>
+          <div class="troll-arm right"></div>
+        </div>
+        <div class="troll-belly">
+          <span class="troll-star">&#10022;</span>
+        </div>
+      </div>
+      <div class="troll-legs">
+        <div class="troll-leg"></div>
+        <div class="troll-leg"></div>
+      </div>
+    </div>
+    <div class="break-box">
+      <h2>Chwilka przerwy! 😊</h2>
+      <p>Uczysz się już od 10 minut — świetna robota!</p>
+      <p>Leoś też musi trochę odpocząć. 💚<br>Odejdź od ekranu na chwilę, a potem wróć!</p>
+      <button class="btn btn-green btn-wide" onclick="App.continueAfterBreak()">Wracam! 💪</button>
     </div>
   </div>
 </div>

@@ -634,12 +634,32 @@ function renderClickDictation(rule) {
 //  APP CONTROLLER
 // ============================================================
 const App = {
-  showWelcome() { showScreen('screen-welcome'); },
+  showWelcome() {
+    Session.stop(); Idle.stop();
+    showScreen('screen-welcome');
+  },
 
   showMenu() {
+    Session.stop(); Idle.stop();
     showScreen('screen-menu');
     this._renderRulesGrid();
     updateScoreDisplay();
+  },
+
+  continueAfterBreak() {
+    Session.start();
+    showScreen('screen-rule');
+    Idle.reset();
+  },
+
+  toggleQuietMode() {
+    const quiet = document.body.classList.toggle('quiet-mode');
+    localStorage.setItem('leosQuiet', quiet ? '1' : '0');
+    document.querySelectorAll('.btn-quiet').forEach(btn => {
+      btn.textContent = quiet ? '🔇' : '🔊';
+      btn.title = quiet ? 'Tryb cichy: włączony' : 'Tryb cichy: wyłączony';
+    });
+    if (quiet) TTS.stop();
   },
 
   _renderRulesGrid() {
@@ -671,6 +691,8 @@ const App = {
   },
 
   openRule(idx) {
+    Session.start();
+    this._consecutiveErrors = 0;
     State.currentRuleIdx = idx;
     State.currentExerciseIdx = 0;
     State.exerciseAnswers = [];
@@ -690,6 +712,7 @@ const App = {
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
     document.querySelectorAll('.tab-content').forEach(tc => tc.classList.toggle('active', tc.id === 'tab-' + name));
     window.scrollTo(0, 0);
+    if (name === 'exercises') Idle.reset(); else Idle.stop();
   },
 
   // ── THEORY ──────────────────────────────────────────────
@@ -844,8 +867,8 @@ const App = {
         // Reveal the correct spelling
         el.innerHTML = `<span class="blank-slot revealed">${w.display}</span>`;
       } else {
-        el.style.background = 'var(--red-pale)'; el.style.borderColor = 'var(--red)';
-        el.innerHTML = `<span style="color:var(--red)">${w.display}</span>`;
+        el.style.background = 'var(--warn-pale)'; el.style.borderColor = 'var(--warn)';
+        el.innerHTML = `<span style="color:var(--warn)">${w.display}</span>`;
       }
     });
 
@@ -858,35 +881,49 @@ const App = {
 
   _leosComments: [
     'Super! Wiedziałem, że dasz radę!',
-    'Brawo! Jesteś świetny!',
+    'Brawo! Starałeś się i to widać!',
     'Wow, to było idealne!',
     'Tak trzymaj! Leoś jest z ciebie bardzo dumny!',
-    'Niesamowite! Masz talent do ortografii!',
+    'Niesamowite! Tak się właśnie uczy ortografii!',
     'Doskonale! Tak właśnie się pisze!',
     'Hurra! Kolejny punkt dla ciebie!',
-    'Znakomicie! Uczysz się szybko!',
+    'Znakomicie! Uczysz się coraz lepiej!',
   ],
-  _lastLeosComment: -1,
+  // Sequential indices – no Math.random (#18)
+  _msgIdx: 0,
+  _leosCommentIdx: 0,
+  _consecutiveErrors: 0,   // for error escalation (#8)
 
   _showFeedback(correct, hint) {
     const fb = document.getElementById('exercise-feedback');
     fb.className = 'feedback ' + (correct ? 'correct-fb' : 'wrong-fb');
+    Idle.reset();
+
     if (correct) {
-      const msgs = ['Super! 🎉', 'Brawo! 🌟', 'Znakomicie! ✨', 'Tak trzymaj! 👏', 'Leoś jest z ciebie dumny! 🌈', 'Niesamowite! 🏆'];
-      fb.textContent = '✓ ' + msgs[Math.floor(Math.random() * msgs.length)];
+      this._consecutiveErrors = 0;
+      // Sequential rotation – predictable, not random (#18)
+      const msgs = ['Super! 🎉', 'Brawo! 🌟', 'Znakomicie! ✨', 'Tak trzymaj! 👏', 'Świetna robota! 🌈', 'Niesamowite! 🏆'];
+      fb.textContent = '✓ ' + msgs[this._msgIdx % msgs.length];
+      this._msgIdx++;
       leosTalk(1800);
-      // Leoś speaks every 3rd correct answer
+      // Leoś speaks every 3rd correct answer – sequential (#18)
       this._correctStreak = (this._correctStreak || 0) + 1;
-      if (this._correctStreak % 3 === 0) {
-        let idx;
-        do { idx = Math.floor(Math.random() * this._leosComments.length); }
-        while (idx === this._lastLeosComment && this._leosComments.length > 1);
-        this._lastLeosComment = idx;
+      if (this._correctStreak % 3 === 0 && !document.body.classList.contains('quiet-mode')) {
+        const idx = this._leosCommentIdx % this._leosComments.length;
+        this._leosCommentIdx++;
         setTimeout(() => TTS.speakOnce(this._leosComments[idx], 0.85, 1.5), 400);
       }
     } else {
       this._correctStreak = 0;
-      fb.innerHTML = '✗ Prawie! ' + (hint ? '<em>' + hint + '</em>' : 'Spróbuj jeszcze raz!');
+      this._consecutiveErrors++;
+      // Error escalation (#8): plain → hint → show answer
+      if (this._consecutiveErrors >= 3 && hint) {
+        fb.innerHTML = '✗ Prawie! Poprawna odpowiedź: <strong>' + hint + '</strong>';
+      } else if (this._consecutiveErrors >= 2 && hint) {
+        fb.innerHTML = '✗ Jeszcze raz! Wskazówka: <em>' + hint + '</em>';
+      } else {
+        fb.textContent = '✗ Prawie! Spróbuj jeszcze raz!';
+      }
     }
   },
 
@@ -918,9 +955,18 @@ const App = {
     document.getElementById('results-total').textContent   = total;
 
     let title, stars, msg;
-    if (pct === 1)      { title='Fantastycznie! 🏆'; stars='★★★'; msg='Leoś jest z ciebie bardzo dumny! Wszystko bezbłędnie!'; addScore(30); }
-    else if (pct >= .6) { title='Dobrze! 🌟';        stars='★★☆'; msg='Prawie idealnie! Wróć do teorii i spróbuj jeszcze raz!'; addScore(15); }
-    else                { title='Spróbuj jeszcze! 💪'; stars='★☆☆'; msg='Nie martw się! Przeczytaj teorię i ćwicz dalej!'; }
+    if (pct === 1) {
+      title = 'Fantastycznie! 🏆'; stars = '★★★';
+      msg = 'Świetnie się postarałeś i to widać! Wszystko bezbłędnie!';
+      addScore(30);
+    } else if (pct >= .6) {
+      title = 'Dobra robota! 🌟'; stars = '★★☆';
+      msg = 'Starałeś się naprawdę mocno! Wróć do teorii i spróbuj jeszcze raz!';
+      addScore(15);
+    } else {
+      title = 'Próbuj dalej! 💪'; stars = '★☆☆';
+      msg = 'Nauka wymaga czasu – to jest zupełnie OK! Przeczytaj teorię i ćwicz dalej. Leoś w ciebie wierzy!';
+    }
 
     document.getElementById('results-title').textContent   = title;
     document.getElementById('results-stars').textContent   = stars;
@@ -1030,9 +1076,9 @@ const App = {
       label.textContent = value;
       label.style.color = '#1e293b';
     }
-    tokenEl.style.background = '#ddd6fe';
-    tokenEl.style.borderColor = '#7c3aed';
-    tokenEl.style.color = '#4c1d95';
+    tokenEl.style.background = '#fde68a';
+    tokenEl.style.borderColor = '#b37800';
+    tokenEl.style.color = '#7a5500';
   },
 
   checkClickDictation() {
@@ -1052,9 +1098,9 @@ const App = {
         el.querySelector('.token-label').textContent = part.answer;
       } else {
         el.classList.add('selected-wrong', 'checked-reveal');
-        el.style.background = 'var(--red-pale)';
-        el.style.borderColor = 'var(--red)';
-        el.style.color = 'var(--red)';
+        el.style.background = 'var(--warn-pale)';
+        el.style.borderColor = 'var(--warn)';
+        el.style.color = '#7a3a08';
         el.querySelector('.token-label').textContent = (selected || '?') + ' → ' + part.answer;
       }
     });
@@ -1087,13 +1133,75 @@ document.addEventListener('click', e => {
   if (!e.target.closest('.dict-choice-token')) {
     document.querySelectorAll('.dict-choice-token.open').forEach(t => t.classList.remove('open'));
   }
+  Idle.reset();
 });
+document.addEventListener('keydown', () => Idle.reset());
+
+// ============================================================
+//  IDLE DETECTION (#17 — hint after 5s, voice after 15s)
+// ============================================================
+const Idle = {
+  _t5: null, _t15: null,
+
+  reset() {
+    clearTimeout(this._t5); clearTimeout(this._t15);
+    document.querySelectorAll('.idle-pulse').forEach(el => el.classList.remove('idle-pulse'));
+    // Only activate idle hints while exercises tab is open
+    if (document.getElementById('tab-exercises')?.classList.contains('active') ||
+        document.querySelector('#screen-rule.active')) {
+      this._t5  = setTimeout(() => this._hint5(),  5000);
+      this._t15 = setTimeout(() => this._hint15(), 15000);
+    }
+  },
+
+  stop() {
+    clearTimeout(this._t5); clearTimeout(this._t15);
+    document.querySelectorAll('.idle-pulse').forEach(el => el.classList.remove('idle-pulse'));
+  },
+
+  _hint5() {
+    const btn = document.querySelector('.choice-btn:not(.disabled)')
+             || document.querySelector('#btn-next-ex')
+             || document.querySelector('.submit-btn:not([disabled])');
+    if (btn) btn.classList.add('idle-pulse');
+  },
+
+  _hint15() {
+    if (!document.body.classList.contains('quiet-mode') && window.speechSynthesis) {
+      TTS.speakOnce('Kliknij przycisk, żeby kontynuować!', 0.7, 1.2);
+    }
+  }
+};
+
+// ============================================================
+//  SESSION TIMER (#6 — soft break after 10 min)
+// ============================================================
+const Session = {
+  _timer: null,
+
+  start() {
+    clearTimeout(this._timer);
+    this._timer = setTimeout(() => showScreen('screen-break'), 10 * 60 * 1000);
+  },
+
+  stop() { clearTimeout(this._timer); }
+};
 
 // ============================================================
 //  INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
   updateScoreDisplay();
+
+  // Restore quiet mode preference (#22)
+  if (localStorage.getItem('leosQuiet') === '1') {
+    document.body.classList.add('quiet-mode');
+    document.querySelectorAll('.btn-quiet').forEach(btn => {
+      btn.textContent = '🔇';
+      btn.title = 'Tryb cichy: włączony';
+    });
+  }
+
   // Preload voices for TTS
   if (window.speechSynthesis) {
     speechSynthesis.getVoices();
